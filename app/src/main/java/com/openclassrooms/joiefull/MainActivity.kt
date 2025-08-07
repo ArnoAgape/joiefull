@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JoiefullTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    HomeScreen() // ta page d'accueil ici
+                    HomeScreen()
                 }
             }
         }
