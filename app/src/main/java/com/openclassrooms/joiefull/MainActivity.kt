@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.openclassrooms.joiefull.data.ArticleData.articlesList
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +15,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JoiefullTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    HomeScreen()
+                    HomeScreen(articlesList)
                 }
             }
         }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_men">hommes</string>
+    <string name="category_women">femmes</string>
+    <string name="category_children">enfants</string>
+
+    <string name="category_tops">Hauts</string>
+    <string name="category_bottoms">Bas</string>
+    <string name="category_shoes">Chaussures</string>
+    <string name="category_accessories">Accessoires</string>
+</resources>
