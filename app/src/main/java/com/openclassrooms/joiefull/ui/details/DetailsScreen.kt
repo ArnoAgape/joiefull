@@ -1,4 +1,4 @@
-package com.openclassrooms.joiefull.ui.screens
+package com.openclassrooms.joiefull.ui.details
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

@@ -1,4 +1,4 @@
-package com.openclassrooms.joiefull.ui.screens
+package com.openclassrooms.joiefull.ui
 
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
@@ -13,7 +13,7 @@ sealed class Screen(
     data object ArticleDetails : Screen(
         route = "articleDetails/{articleId}",
         navArguments = listOf(navArgument("articleId") {
-            type = NavType.StringType
+            type = NavType.Companion.StringType
         })
     ) {
         fun createRoute(articleId: String) = "articleDetails/$articleId"

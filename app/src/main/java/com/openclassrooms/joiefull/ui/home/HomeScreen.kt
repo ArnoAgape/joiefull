@@ -1,4 +1,4 @@
-package com.openclassrooms.joiefull.ui.screens
+package com.openclassrooms.joiefull.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -37,19 +37,37 @@ import com.openclassrooms.joiefull.data.ArticleData.articlesList
 import com.openclassrooms.joiefull.model.Article
 import com.openclassrooms.joiefull.model.Category
 import com.openclassrooms.joiefull.model.Section
+import androidx.activity.viewModels
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
+import java.util.Locale
+
 
 fun buildSections(all: List<Article>): List<Section> =
     Category.entries
         .map { cat -> Section(cat, all.filter { it.category == cat }) }
-        .filter { it.articles.isNotEmpty() } // on ne garde que les sections non vides
+        .filter { it.articles.isNotEmpty() }
 
 
 @Composable
 fun HomeScreen(
-    articles: List<Article> = articlesList,
     onArticleClick: (Article) -> Unit = {},
-    ) {
-    val sections = remember(articles) { buildSections(articles) }
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    val sections = remember(uiState.article) { buildSections(uiState.article) }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiState
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -84,11 +102,12 @@ fun HomeScreen(
 @Composable
 fun ArticleCard(
     article: Article,
-    onClick: () -> Unit) {
+    onClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .width(198.dp)
-            .clickable { onClick()},
+            .clickable { onClick() },
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         // Image
@@ -144,7 +163,8 @@ fun ArticleCard(
                     text = article.oldPrice,
                     style = MaterialTheme.typography.titleSmall.copy(
                         textDecoration = TextDecoration.LineThrough,
-                        color = Color.Gray),
+                        color = Color.Gray
+                    ),
                     maxLines = 1
                 )
             }
@@ -157,12 +177,14 @@ fun ArticleCard(
 @Composable
 fun ListArticleCardPreview() {
     ArticleCard(
-        Article(0,
+        Article(
+            0,
             "Jean pour femme et homme",
             "49.99 €", "59.99 €",
             4.3, 55,
             R.drawable.img_pants,
-            Category.BOTTOMS), onClick = {})
+            Category.BOTTOMS
+        ), onClick = {})
 }
 
 @Preview(showBackground = true, name = "HomeScreen")

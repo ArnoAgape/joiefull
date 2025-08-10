@@ -6,12 +6,13 @@ import com.openclassrooms.joiefull.R
 data class Article(
     val id: Int,
     val title: String,
-    val price: String,
-    val oldPrice: String,
-    val rate: Double,
-    val favorites: Int,
-    val picture: Int,
-    val category: Category)
+    val price: Double,
+    val oldPrice: Double,
+    val rate: Double?,
+    val favorite: Int,
+    val picture: String,
+    val category: String
+)
 
 data class Section(
     val category: Category,

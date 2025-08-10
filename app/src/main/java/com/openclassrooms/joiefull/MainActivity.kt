@@ -13,11 +13,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.openclassrooms.joiefull.data.ArticleData.articlesList
-import com.openclassrooms.joiefull.ui.screens.ArticleDetailsScreen
-import com.openclassrooms.joiefull.ui.screens.HomeScreen
-import com.openclassrooms.joiefull.ui.screens.Screen
+import com.openclassrooms.joiefull.ui.Screen
+import com.openclassrooms.joiefull.ui.details.ArticleDetailsScreen
+import com.openclassrooms.joiefull.ui.home.HomeScreen
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Joiefull)
