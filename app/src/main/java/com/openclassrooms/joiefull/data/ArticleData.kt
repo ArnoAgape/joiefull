@@ -46,5 +46,29 @@ object ArticleData {
         R.drawable.img_blazer,
         Category.TOPS)
 
-    val articlesList = listOf(first, second, third, fourth, fifth)
+    private val sixth = Article(
+        5,
+        "Jean pour femme",
+        "49.99 €", "59.99 €",
+        4.3, 55,
+        R.drawable.img_pants,
+        Category.BOTTOMS)
+
+    private val seventh = Article(
+        6,
+        "Sac à main orange",
+        "69.99 €","69.99 €",
+        4.2, 56,
+        R.drawable.img_bag,
+        Category.ACCESSORIES)
+
+    private val eighth = Article(
+        7,
+        "Bottes noires pour l'automne",
+        "99.99 €", "119.99 €",
+        3.9, 4,
+        R.drawable.img_boots,
+        Category.SHOES)
+
+    val articlesList = listOf(first, second, third, fourth, fifth, sixth, seventh, eighth)
 }

@@ -1,6 +1,7 @@
-package com.openclassrooms.joiefull
+package com.openclassrooms.joiefull.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,6 +32,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.openclassrooms.joiefull.R
 import com.openclassrooms.joiefull.data.ArticleData.articlesList
 import com.openclassrooms.joiefull.model.Article
 import com.openclassrooms.joiefull.model.Category
@@ -43,8 +45,11 @@ fun buildSections(all: List<Article>): List<Section> =
 
 
 @Composable
-fun HomeScreen(allArticles: List<Article>) {
-    val sections = remember(allArticles) { buildSections(allArticles) }
+fun HomeScreen(
+    articles: List<Article> = articlesList,
+    onArticleClick: (Article) -> Unit = {},
+    ) {
+    val sections = remember(articles) { buildSections(articles) }
 
     LazyColumn(
         modifier = Modifier
@@ -68,7 +73,7 @@ fun HomeScreen(allArticles: List<Article>) {
                         items = section.articles,
                         key = { it.id }
                     ) { article ->
-                        ArticleCard(article)
+                        ArticleCard(article) { onArticleClick(article) }
                     }
                 }
             }
@@ -77,10 +82,13 @@ fun HomeScreen(allArticles: List<Article>) {
 }
 
 @Composable
-fun ArticleCard(article: Article) {
+fun ArticleCard(
+    article: Article,
+    onClick: () -> Unit) {
     Column(
         modifier = Modifier
-            .width(198.dp),
+            .width(198.dp)
+            .clickable { onClick()},
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         // Image
@@ -154,13 +162,13 @@ fun ListArticleCardPreview() {
             "49.99 €", "59.99 €",
             4.3, 55,
             R.drawable.img_pants,
-            Category.BOTTOMS))
+            Category.BOTTOMS), onClick = {})
 }
 
 @Preview(showBackground = true, name = "HomeScreen")
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(allArticles = articlesList)
+    HomeScreen(articles = articlesList)
 }
 
 
