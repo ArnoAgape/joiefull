@@ -125,7 +125,7 @@ fun ArticleCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = article.price.toString(),
+                    text = article.price.toString() + " €",
                     style = MaterialTheme.typography.titleSmall
                 )
             }
@@ -148,7 +148,7 @@ fun ArticleCard(
                 }
 
                 Text(
-                    text = article.originalPrice.toString(),
+                    text = article.originalPrice.toString() + " €",
                     style = MaterialTheme.typography.titleSmall.copy(
                         textDecoration = TextDecoration.LineThrough,
                         color = Color.Gray
@@ -162,16 +162,34 @@ fun ArticleCard(
 
 @Composable
 private fun HomeList(
-    modifier: Modifier = Modifier,
     articles: List<Article>,
     onArticleClick: (Article) -> Unit,
 ) {
-    LazyColumn(modifier) {
-        items(articles) { article ->
-            ArticleCard(
-                article = article,
-                onClick = onArticleClick
-            )
+    val sections = remember(articles) { buildSections(articles) }
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        sections.forEach { section ->
+            item(key = section.category.name) {
+                Text(
+                    text = stringResource(id = section.category.translatedName),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Spacer(Modifier.height(8.dp))
+
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = 4.dp)
+                ) {
+                    items(section.articles, key = { it.id }) { article ->
+                        ArticleCard(article) { onArticleClick(article) }
+                    }
+                }
+            }
         }
     }
 }
@@ -186,7 +204,7 @@ fun ListArticleCardPreview() {
             49.99, 59.99,
             4.3, 55,
             Picture(
-                url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/bottoms/1.jpg",
+                url = "",
                 description = "Modèle femme qui porte un jean et un haut jaune"
             ),
             category = "BOTTOMS"
