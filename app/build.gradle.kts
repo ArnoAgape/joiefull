@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.compose.compiler)
 }
+hilt {
+    enableAggregatingTask = false
+}
 
 android {
     namespace = "com.openclassrooms.joiefull"
@@ -85,6 +88,9 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
+
+    // Coil (for pictures)
+    implementation(libs.coil.compose)
 
     // Tests
     testImplementation(libs.junit)

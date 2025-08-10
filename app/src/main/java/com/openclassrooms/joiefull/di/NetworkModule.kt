@@ -22,7 +22,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/")
+            .baseUrl("https://raw.githubusercontent.com/")
             .addConverterFactory(
                 MoshiConverterFactory.create(
                     Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
@@ -33,10 +33,10 @@ object NetworkModule {
     }
 
 
-    // Provides a singleton instance of EurConversion using Retrofit
+    // Provides a singleton instance of ArticleData using Retrofit
     @Singleton
     @Provides
-    fun provideEurConversion(retrofit: Retrofit): ArticleApiService {
+    fun provideArticleData(retrofit: Retrofit): ArticleApiService {
         return retrofit.create(ArticleApiService::class.java)
     }
 

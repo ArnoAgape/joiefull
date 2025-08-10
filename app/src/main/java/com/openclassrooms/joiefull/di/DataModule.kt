@@ -14,7 +14,7 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideCurrencyRepository(apiService: ArticleApiService):
+    fun provideArticleRepository(apiService: ArticleApiService):
             ArticleRepository {
         return ArticleRepository(apiService)
     }

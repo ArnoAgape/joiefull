@@ -12,7 +12,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.openclassrooms.joiefull.data.ArticleData.articlesList
 import com.openclassrooms.joiefull.ui.Screen
 import com.openclassrooms.joiefull.ui.details.ArticleDetailsScreen
 import com.openclassrooms.joiefull.ui.home.HomeScreen
@@ -27,7 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JoiefullTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    HomeScreen(articlesList)
+                    HomeScreen()
                 }
             }
         }

@@ -2,16 +2,22 @@ package com.openclassrooms.joiefull.model
 
 import androidx.annotation.StringRes
 import com.openclassrooms.joiefull.R
+import com.squareup.moshi.Json
 
 data class Article(
     val id: Int,
-    val title: String,
+    val name: String,
     val price: Double,
-    val oldPrice: Double,
+    @Json(name = "original_price") val originalPrice: Double,
     val rate: Double?,
-    val favorite: Int,
-    val picture: String,
+    val likes: Int,
+    val picture: Picture,
     val category: String
+)
+
+data class Picture(
+    val url: String,
+    val description: String
 )
 
 data class Section(
