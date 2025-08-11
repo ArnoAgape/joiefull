@@ -8,4 +8,6 @@
     <string name="category_bottoms">Bas</string>
     <string name="category_shoes">Chaussures</string>
     <string name="category_accessories">Accessoires</string>
+
+    <string name="retry">Réessayer</string>
 </resources>

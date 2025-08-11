@@ -73,9 +73,6 @@ dependencies {
     implementation (libs.androidx.core.splashscreen)
     implementation(libs.androidx.navigation.compose)
 
-    // Glide for pictures
-    implementation(libs.glide)
-
     // Moshi JSON Library
     implementation(libs.moshi)
 

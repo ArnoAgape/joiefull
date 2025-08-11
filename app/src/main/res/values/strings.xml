@@ -9,4 +9,6 @@
     <string name="category_bottoms">Bottoms</string>
     <string name="category_shoes">Shoes</string>
     <string name="category_accessories">Accessories</string>
+
+    <string name="retry">Retry</string>
 </resources>
