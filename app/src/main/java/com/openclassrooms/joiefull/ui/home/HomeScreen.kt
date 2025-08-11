@@ -66,7 +66,6 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
     val retryLabel = stringResource(R.string.retry)
 
-    // Affiche le Snackbar si errorMessage change
     LaunchedEffect(uiState.errorMessage) {
         uiState.errorMessage?.let { error ->
             scope.launch {
@@ -199,7 +198,7 @@ fun ArticleCard(
 }
 
 @Composable
-private fun HomeList(
+private fun HomeScreen(
     articles: List<Article>,
     onArticleClick: (Article) -> Unit,
 ) {
@@ -253,7 +252,7 @@ fun ListArticleCardPreview() {
 @Preview(showBackground = true, name = "HomeScreen")
 @Composable
 fun HomeScreenPreview() {
-    HomeList(
+    HomeScreen(
         articles = listOf(
             Article(
                 0,
