@@ -8,10 +8,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import androidx.navigation.compose.rememberNavController
 import com.openclassrooms.joiefull.ui.Screen
 import com.openclassrooms.joiefull.ui.details.ArticleDetailsScreen
 import com.openclassrooms.joiefull.ui.home.HomeScreen
@@ -29,6 +28,8 @@ class MainActivity : ComponentActivity() {
                     HomeScreen()
                 }
             }
+            val navController = rememberNavController()
+            JoiefullNavHost(navController)
         }
     }
 }
@@ -52,11 +53,11 @@ fun JoiefullNavHost(navHostController: NavHostController) {
         }
 
         composable(
-            route = Screen.ArticleDetails.route, // par ex. "articleDetails/{articleId}"
-            arguments = listOf(navArgument("articleId") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val articleId = backStackEntry.arguments?.getString("articleId") ?: ""
-            ArticleDetailsScreen(articleId = articleId)
+            route = Screen.ArticleDetails.route,
+            arguments = Screen.ArticleDetails.navArguments
+        ) {
+            ArticleDetailsScreen()
         }
+
     }
 }

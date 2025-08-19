@@ -16,5 +16,10 @@ class ArticleRepository @Inject constructor(private val apiService: ArticleApiSe
             throw ApiErrorException("HTTP error ${response.code()}: ${response.message()}")
         }
     }
+
+    suspend fun getArticleById(articleId: String): Article? {
+        return fetchArticleData().find { it.id.toString() == articleId }
+    }
 }
+
 class ApiErrorException(message: String) : Exception(message)
