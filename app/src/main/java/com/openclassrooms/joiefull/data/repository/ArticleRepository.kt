@@ -1,7 +1,8 @@
 package com.openclassrooms.joiefull.data.repository
 
-import com.openclassrooms.joiefull.data.model.Article
 import com.openclassrooms.joiefull.data.network.ArticleApiService
+import com.openclassrooms.joiefull.domain.Article
+import com.openclassrooms.joiefull.domain.toDomain
 import jakarta.inject.Inject
 import javax.inject.Singleton
 
@@ -9,12 +10,8 @@ import javax.inject.Singleton
 @Singleton
 class ArticleRepository @Inject constructor(private val apiService: ArticleApiService) {
     suspend fun fetchArticleData(): List<Article> {
-        val response = apiService.getArticleData()
-        return if (response.isSuccessful) {
-            response.body() ?: emptyList()
-        } else {
-            throw ApiErrorException("HTTP error ${response.code()}: ${response.message()}")
-        }
+        return apiService.getArticleData()
+            .map { dto -> dto.toDomain() }
     }
 
     suspend fun getArticleById(articleId: String): Article? {

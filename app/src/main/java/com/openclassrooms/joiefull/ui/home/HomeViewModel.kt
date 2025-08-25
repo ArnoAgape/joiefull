@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.openclassrooms.joiefull.data.model.Article
 import com.openclassrooms.joiefull.data.repository.ApiErrorException
 import com.openclassrooms.joiefull.data.repository.ArticleRepository
+import com.openclassrooms.joiefull.domain.Article
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

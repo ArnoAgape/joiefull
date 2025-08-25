@@ -43,16 +43,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.openclassrooms.joiefull.R
-import com.openclassrooms.joiefull.data.model.Article
-import com.openclassrooms.joiefull.data.model.Picture
+import com.openclassrooms.joiefull.domain.Article
+import com.openclassrooms.joiefull.domain.Category
+import com.openclassrooms.joiefull.domain.Picture
 
 @Composable
 fun ArticleDetailsScreen() {
 
     val viewModel: DetailsViewModel = hiltViewModel()
-    val article by viewModel.article.collectAsState()
+    val articleDto by viewModel.article.collectAsState()
 
-    if (article == null) {
+    if (articleDto == null) {
         Text(
             text = "Loading...",
             modifier = Modifier.padding(16.dp)
@@ -66,8 +67,8 @@ fun ArticleDetailsScreen() {
         ) {
             Card(elevation = CardDefaults.cardElevation()) {
                 AsyncImage(
-                    model = article!!.picture.url,
-                    contentDescription = article!!.picture.description,
+                    model = articleDto!!.picture.url,
+                    contentDescription = articleDto!!.picture.description,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -82,13 +83,13 @@ fun ArticleDetailsScreen() {
             ) {
                 Column(modifier = Modifier.weight(3f)) {
                     Text(
-                        text = article!!.name,
+                        text = articleDto!!.name,
                         style = MaterialTheme.typography.titleSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = "${article!!.price} €",
+                        text = "${articleDto!!.price} €",
                         style = MaterialTheme.typography.titleSmall
                     )
                 }
@@ -105,13 +106,13 @@ fun ArticleDetailsScreen() {
                         )
                         Spacer(modifier = Modifier.width(3.dp))
                         Text(
-                            text = article!!.rate.toString(),
+                            text = articleDto!!.rate?.toString() ?: "-",
                             style = MaterialTheme.typography.titleSmall
                         )
                     }
 
                     Text(
-                        text = "${article!!.originalPrice} €",
+                        text = "${articleDto!!.originalPrice} €",
                         style = MaterialTheme.typography.titleSmall.copy(
                             textDecoration = TextDecoration.LineThrough,
                             color = Color.Gray
@@ -126,7 +127,7 @@ fun ArticleDetailsScreen() {
                     .padding(8.dp)
             ) {
                 Text(
-                    text = article!!.picture.description,
+                    text = articleDto!!.picture.description,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -281,7 +282,7 @@ fun ArticleDetailsPreview() {
             url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/shoes/1.jpg",
             description = "Modèle femme qui pose dans la rue en bottes de pluie noires"
         ),
-        "SHOES"
+        Category.SHOES
     )
     ArticleDetailsContent(fakeArticle, onBackClick = {}, onShareClick = {}, favorite = false, onFavoriteClick = {} )
 }

@@ -1,18 +1,18 @@
-package com.openclassrooms.joiefull.data.model
+package com.openclassrooms.joiefull.domain
 
 import androidx.annotation.StringRes
 import com.openclassrooms.joiefull.R
-import com.squareup.moshi.Json
+import com.openclassrooms.joiefull.data.model.ArticleDto
 
 data class Article(
     val id: Int,
     val name: String,
     val price: Double,
-    @Json(name = "original_price") val originalPrice: Double,
-    val rate: Double?,
+    val originalPrice: Double,
+    val rate: Double? = 0.0,
     val likes: Int,
     val picture: Picture,
-    val category: String
+    val category: Category
 )
 
 data class Picture(
@@ -40,4 +40,17 @@ enum class Category {
             ACCESSORIES -> R.string.category_accessories
         }
 }
+
+fun ArticleDto.toDomain(): Article = Article(
+    id = id,
+    name = name,
+    price = price,
+    originalPrice = originalPrice,
+    rate = null,
+    likes = 0,
+    picture = Picture(pictureDto.url, pictureDto.description),
+    category = Category.valueOf(category.uppercase())
+)
+
+
 

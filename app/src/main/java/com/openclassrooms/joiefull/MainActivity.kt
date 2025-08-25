@@ -23,7 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.openclassrooms.joiefull.data.model.Article
+import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.ui.Screen
 import com.openclassrooms.joiefull.ui.details.ArticleDetailsScreen
 import com.openclassrooms.joiefull.ui.home.HomeScreen

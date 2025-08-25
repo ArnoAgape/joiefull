@@ -44,16 +44,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.openclassrooms.joiefull.R
-import com.openclassrooms.joiefull.data.model.Article
-import com.openclassrooms.joiefull.data.model.Category
-import com.openclassrooms.joiefull.data.model.Picture
-import com.openclassrooms.joiefull.data.model.Section
+import com.openclassrooms.joiefull.domain.Article
+import com.openclassrooms.joiefull.domain.Category
+import com.openclassrooms.joiefull.domain.Picture
+import com.openclassrooms.joiefull.domain.Section
 import kotlinx.coroutines.launch
 
 
 fun buildSections(all: List<Article>): List<Section> =
     Category.entries
-        .map { cat -> Section(cat, all.filter { it.category == cat.toString() }) }
+        .map { cat -> Section(cat, all.filter { it.category == cat }) }
         .filter { it.articles.isNotEmpty() }
 
 @Composable
@@ -246,7 +246,7 @@ fun ListArticleCardPreview() {
                 url = "",
                 description = "Modèle femme qui porte un jean et un haut jaune"
             ),
-            category = "BOTTOMS"
+            category = Category.BOTTOMS
         ), onClick = {})
 }
 
@@ -264,7 +264,7 @@ fun HomeScreenPreview() {
                     url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/bottoms/1.jpg",
                     description = "Modèle femme qui porte un jean et un haut jaune"
                 ),
-                category = "BOTTOMS"
+                category = Category.BOTTOMS
             ),
             Article(
                 1,
@@ -275,7 +275,7 @@ fun HomeScreenPreview() {
                     url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/accessories/1.jpg",
                     description = "Sac à main orange posé sur une poignée de porte"
                 ),
-                "ACCESSORIES"
+                Category.ACCESSORIES
             ),
             Article(
                 2,
@@ -286,7 +286,7 @@ fun HomeScreenPreview() {
                     url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/shoes/1.jpg",
                     description = "Modèle femme qui pose dans la rue en bottes de pluie noires"
                 ),
-                "SHOES"
+                Category.SHOES
             ),
             Article(
                 3,
@@ -297,7 +297,7 @@ fun HomeScreenPreview() {
                     url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/tops/1.jpg",
                     description = "Homme en costume et veste de blazer qui regarde la caméra"
                 ),
-                "TOPS"
+                Category.TOPS
             ),
             Article(
                 4,
@@ -308,7 +308,7 @@ fun HomeScreenPreview() {
                     url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/tops/1.jpg",
                     description = "Homme en costume et veste de blazer qui regarde la caméra"
                 ),
-                "TOPS"
+                Category.TOPS
             ),
             Article(
                 5,
@@ -319,7 +319,7 @@ fun HomeScreenPreview() {
                     url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/bottoms/1.jpg",
                     description = "Modèle femme qui porte un jean et un haut jaune"
                 ),
-                "BOTTOMS"
+                Category.BOTTOMS
             ),
             Article(
                 6,
@@ -330,7 +330,7 @@ fun HomeScreenPreview() {
                     url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/accessories/1.jpg",
                     description = "Sac à main orange posé sur une poignée de porte"
                 ),
-                "ACCESSORIES"
+                Category.ACCESSORIES
             ),
             Article(
                 7,
@@ -341,7 +341,7 @@ fun HomeScreenPreview() {
                     url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/shoes/1.jpg",
                     description = "Modèle femme qui pose dans la rue en bottes de pluie noires"
                 ),
-                "SHOES"
+                Category.SHOES
             )
         ),
         onArticleClick = {}
