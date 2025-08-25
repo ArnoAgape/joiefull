@@ -89,6 +89,12 @@ dependencies {
     // Coil (for pictures)
     implementation(libs.coil.compose)
 
+    // Adapter Window Size
+    implementation(libs.androidx.adaptive)
+    implementation(libs.androidx.material3.window.size.class1)
+
+
+
     // Tests
     testImplementation(libs.junit)
     testImplementation(libs.turbine)

@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.openclassrooms.joiefull.data.repository.ArticleRepository
-import com.openclassrooms.joiefull.model.Article
+import com.openclassrooms.joiefull.data.model.Article
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +26,7 @@ class DetailsViewModel @Inject constructor(
         loadArticle(articleId)
     }
 
-    private fun loadArticle(articleId: String) {
+    fun loadArticle(articleId: String) {
         viewModelScope.launch {
             try {
                 val result = repository.getArticleById(articleId)

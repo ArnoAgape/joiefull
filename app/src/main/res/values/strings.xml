@@ -11,4 +11,8 @@
     <string name="category_accessories">Accessories</string>
 
     <string name="retry">Retry</string>
+    <string name="back">Back</string>
+    <string name="share">Share</string>
+    <string name="favorite">Add to favorite</string>
+    <string name="no_favorite">Remove from favorite</string>
 </resources>

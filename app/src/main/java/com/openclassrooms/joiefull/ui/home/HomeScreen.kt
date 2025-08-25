@@ -44,10 +44,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.openclassrooms.joiefull.R
-import com.openclassrooms.joiefull.model.Article
-import com.openclassrooms.joiefull.model.Category
-import com.openclassrooms.joiefull.model.Picture
-import com.openclassrooms.joiefull.model.Section
+import com.openclassrooms.joiefull.data.model.Article
+import com.openclassrooms.joiefull.data.model.Category
+import com.openclassrooms.joiefull.data.model.Picture
+import com.openclassrooms.joiefull.data.model.Section
 import kotlinx.coroutines.launch
 
 

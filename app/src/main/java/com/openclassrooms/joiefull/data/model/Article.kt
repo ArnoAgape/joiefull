@@ -1,4 +1,4 @@
-package com.openclassrooms.joiefull.model
+package com.openclassrooms.joiefull.data.model
 
 import androidx.annotation.StringRes
 import com.openclassrooms.joiefull.R

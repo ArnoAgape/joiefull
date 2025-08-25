@@ -11,11 +11,11 @@ sealed class Screen(
     data object Home : Screen("home")
 
     data object ArticleDetails : Screen(
-        route = "articleDetails/{articleId}",
+        route = "article/{articleId}",
         navArguments = listOf(navArgument("articleId") {
             type = NavType.Companion.StringType
         })
     ) {
-        fun createRoute(articleId: String) = "articleDetails/$articleId"
+        fun createRoute(articleId: String) = "article/$articleId"
     }
 }

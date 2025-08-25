@@ -1,7 +1,7 @@
 package com.openclassrooms.joiefull.data.repository
 
+import com.openclassrooms.joiefull.data.model.Article
 import com.openclassrooms.joiefull.data.network.ArticleApiService
-import com.openclassrooms.joiefull.model.Article
 import jakarta.inject.Inject
 import javax.inject.Singleton
 

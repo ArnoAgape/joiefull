@@ -1,11 +1,12 @@
 package com.openclassrooms.joiefull.ui.home
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.openclassrooms.joiefull.data.model.Article
 import com.openclassrooms.joiefull.data.repository.ApiErrorException
 import com.openclassrooms.joiefull.data.repository.ArticleRepository
-import com.openclassrooms.joiefull.model.Article
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +17,12 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: ArticleRepository) :
-    ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val repository: ArticleRepository,
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
+
+    private val selectedItemId = savedStateHandle.getMutableStateFlow<Int?>(KeySelectedItemId, null)
 
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState: StateFlow<HomeUIState> = _uiState.asStateFlow()
@@ -42,6 +47,19 @@ class HomeViewModel @Inject constructor(private val repository: ArticleRepositor
             }
         }
     }
+
+    fun onItemClick(article: Article) {
+        savedStateHandle[KeySelectedItemId] = article.id
+    }
+
+    fun onDetailBackClick() {
+        savedStateHandle[KeySelectedItemId] = null
+    }
+
+    companion object {
+        private const val KeySelectedItemId = "selected_item_id"
+    }
+
 }
 
 data class HomeUIState(

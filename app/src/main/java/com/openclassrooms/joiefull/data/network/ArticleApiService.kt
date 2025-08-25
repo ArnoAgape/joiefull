@@ -1,6 +1,6 @@
 package com.openclassrooms.joiefull.data.network
 
-import com.openclassrooms.joiefull.model.Article
+import com.openclassrooms.joiefull.data.model.Article
 import retrofit2.Response
 import retrofit2.http.GET
 

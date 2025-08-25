@@ -10,4 +10,8 @@
     <string name="category_accessories">Accessoires</string>
 
     <string name="retry">Réessayer</string>
+    <string name="back">Retour</string>
+    <string name="share">Partager</string>
+    <string name="favorite">Ajouter aux favoris</string>
+    <string name="no_favorite">Supprimer des favoris</string>
 </resources>
