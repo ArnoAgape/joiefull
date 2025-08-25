@@ -15,4 +15,7 @@
     <string name="share">Share</string>
     <string name="favorite">Add to favorite</string>
     <string name="no_favorite">Remove from favorite</string>
+
+    <string name="profile_picture">Your profile picture</string>
+    <string name="comment">Share your thoughts on this article here</string>
 </resources>
