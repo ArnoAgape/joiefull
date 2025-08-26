@@ -1,12 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.compose.compiler)
-}
-hilt {
-    enableAggregatingTask = false
 }
 
 android {
@@ -50,6 +45,8 @@ android {
 dependencies {
 
     implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.adaptive.navigation)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     val composeBom = platform("androidx.compose:compose-bom:2025.05.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -81,19 +78,12 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.converter.moshi)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-
     // Coil (for pictures)
     implementation(libs.coil.compose)
 
     // Adapter Window Size
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.material3.window.size.class1)
-
-
 
     // Tests
     testImplementation(libs.junit)

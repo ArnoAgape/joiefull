@@ -17,4 +17,5 @@
 
     <string name="profile_picture">Votre photo de profil</string>
     <string name="comment">Partagez ici vos impressions sur cette pièce</string>
+    <string name="no_item_selected">Aucun élément sélectionné</string>
 </resources>
