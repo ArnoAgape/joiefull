@@ -9,11 +9,10 @@ data class Article(
     val name: String,
     val price: Double,
     val originalPrice: Double,
-    val rate: Double? = 0.0,
+    val rate: Double = 0.0,
     val likes: Int,
     val picture: Picture,
-    val category: Category,
-    val isFavorite: Boolean
+    val category: Category
 )
 
 data class Picture(
@@ -47,11 +46,10 @@ fun ArticleDto.toDomain(): Article = Article(
     name = name,
     price = price,
     originalPrice = originalPrice,
-    rate = null,
-    likes = 0,
+    rate = 0.0,
+    likes = likes,
     picture = Picture(pictureDto.url, pictureDto.description),
-    category = Category.valueOf(category.uppercase()),
-    isFavorite = false
+    category = Category.valueOf(category.uppercase())
 )
 
 

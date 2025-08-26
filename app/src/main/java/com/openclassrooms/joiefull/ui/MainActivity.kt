@@ -17,6 +17,7 @@ import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaf
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,7 +58,8 @@ fun MainScreen(viewModel: MainViewModel) {
         detailState = detailState,
         onItemClick = viewModel::onArticleClick,
         onDetailBackClick = viewModel::onDetailBackClick,
-        onToggleFavorite = { id -> viewModel.toggleFavorite(id) }
+        onToggleFavorite = { id -> viewModel.toggleFavorite(id) },
+        onRatingSelected = { id, stars -> viewModel.setUserRating(id, stars) }
     )
 }
 
@@ -68,7 +70,8 @@ private fun MainScreen(
     detailState: DetailState,
     onItemClick: (Article) -> Unit,
     onDetailBackClick: () -> Unit,
-    onToggleFavorite: (Int) -> Unit
+    onToggleFavorite: (Int) -> Unit,
+    onRatingSelected: (articleId: Int, stars: Double) -> Unit
 ) {
     val navigator = rememberListDetailPaneScaffoldNavigator<Int>()
     val scope = rememberCoroutineScope()
@@ -119,7 +122,7 @@ private fun MainScreen(
                             context.startActivity(
                                 Intent.createChooser(
                                     intent,
-                                    "Share through"
+                                    "Share..."
                                 )
                             )
                         }
@@ -127,7 +130,7 @@ private fun MainScreen(
                     onFavoriteClick = {
                         detailState.article?.id?.let(onToggleFavorite)
                     },
-                    favorite = detailState.article?.isFavorite == false
+                    onRatingSelected = onRatingSelected
                 )
             }
         },
@@ -140,10 +143,13 @@ fun MainScreenPreview() {
     JoiefullTheme {
         var selectedItemId by remember { mutableStateOf<Int?>(2) }
         var favorites by remember { mutableStateOf<Set<Int>>(emptySet()) }
+        var userRating by remember { mutableDoubleStateOf(0.0) }
 
         MainScreen(
             state = ListState(articles = FakeData.articles, selectedArticleId = selectedItemId),
-            detailState = DetailState(article = FakeData.articles.first { it.id == selectedItemId }),
+            detailState = DetailState(
+                article = FakeData.articles.first { it.id == selectedItemId },
+                userRating = userRating),
             onItemClick = { selectedItemId = it.id },
             onDetailBackClick = {},
             onToggleFavorite = { id ->
@@ -152,7 +158,8 @@ fun MainScreenPreview() {
                 } else {
                     favorites + id
                 }
-            }
+            },
+            onRatingSelected = { _, stars -> userRating = stars }
         )
     }
 }

@@ -15,8 +15,7 @@ object FakeData {
                 url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/bottoms/1.jpg",
                 description = "Modèle femme qui porte un jean et un haut jaune"
             ),
-            category = Category.BOTTOMS,
-            isFavorite = true
+            category = Category.BOTTOMS
         ),
         Article(
             1,
@@ -27,8 +26,7 @@ object FakeData {
                 url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/accessories/1.jpg",
                 description = "Sac à main orange posé sur une poignée de porte"
             ),
-            Category.ACCESSORIES,
-            isFavorite = true
+            Category.ACCESSORIES
         ),
         Article(
             2,
@@ -39,8 +37,7 @@ object FakeData {
                 url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/shoes/1.jpg",
                 description = "Modèle femme qui pose dans la rue en bottes de pluie noires"
             ),
-            Category.SHOES,
-            isFavorite = true
+            Category.SHOES
         ),
         Article(
             3,
@@ -51,8 +48,7 @@ object FakeData {
                 url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/tops/1.jpg",
                 description = "Homme en costume et veste de blazer qui regarde la caméra"
             ),
-            Category.TOPS,
-            isFavorite = false
+            Category.TOPS
         ),
         Article(
             4,
@@ -63,8 +59,7 @@ object FakeData {
                 url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/tops/1.jpg",
                 description = "Homme en costume et veste de blazer qui regarde la caméra"
             ),
-            Category.TOPS,
-            isFavorite = true
+            Category.TOPS
         ),
         Article(
             5,
@@ -75,8 +70,7 @@ object FakeData {
                 url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/bottoms/1.jpg",
                 description = "Modèle femme qui porte un jean et un haut jaune"
             ),
-            Category.BOTTOMS,
-            isFavorite = false
+            Category.BOTTOMS
         ),
         Article(
             6,
@@ -87,8 +81,7 @@ object FakeData {
                 url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/accessories/1.jpg",
                 description = "Sac à main orange posé sur une poignée de porte"
             ),
-            Category.ACCESSORIES,
-            isFavorite = true
+            Category.ACCESSORIES
         ),
         Article(
             7,
@@ -99,8 +92,7 @@ object FakeData {
                 url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/shoes/1.jpg",
                 description = "Modèle femme qui pose dans la rue en bottes de pluie noires"
             ),
-            Category.SHOES,
-            isFavorite = true
+            Category.SHOES
         )
     )
 }

@@ -1,7 +1,10 @@
 package com.openclassrooms.joiefull.ui
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.VectorConverter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,20 +32,24 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,6 +63,7 @@ import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.domain.Category
 import com.openclassrooms.joiefull.domain.Picture
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +73,7 @@ fun DetailPane(
     onBackClick: () -> Unit,
     onShareClick: () -> Unit,
     onFavoriteClick: () -> Unit,
-    favorite: Boolean
+    onRatingSelected: (articleId: Int, stars: Double) -> Unit
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -77,17 +85,13 @@ fun DetailPane(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (state.article == null) {
-                Text(stringResource(R.string.no_item_selected))
+            Text(stringResource(R.string.no_item_selected))
         } else {
             Card(elevation = CardDefaults.cardElevation()) {
                 Box {
-                    AsyncImage(
-                        model = state.article.picture.url,
-                        contentDescription = state.article.picture.description,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(479.dp)
+                    ZoomableImage(
+                        url = state.article.picture.url,
+                        description = state.article.picture.description
                     )
                     IconButton(
                         onClick = onBackClick,
@@ -124,17 +128,18 @@ fun DetailPane(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
                         ) {
                             Icon(
-                                imageVector = if (favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                imageVector = if (state.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                 contentDescription =
-                                    if (favorite) stringResource(R.string.no_favorite)
+                                    if (state.isFavorite) stringResource(R.string.no_favorite)
                                     else stringResource(R.string.favorite),
+                                tint = if (state.isFavorite) Color.Black else LocalContentColor.current,
                                 modifier = Modifier
                                     .size(20.dp)
                                     .clickable { onFavoriteClick() }
                             )
                             Spacer(Modifier.width(4.dp))
                             Text(
-                                text = "56",
+                                text = state.article.likes.toString(),
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }
@@ -172,7 +177,7 @@ fun DetailPane(
                         )
                         Spacer(modifier = Modifier.width(3.dp))
                         Text(
-                            text = state.article.rate.toString(),
+                            text = state.userRating.toString(),
                             style = MaterialTheme.typography.titleSmall
                         )
                     }
@@ -213,18 +218,19 @@ fun DetailPane(
                         .clip(CircleShape)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
+
                 // RatingBar
-                var rating by remember { mutableIntStateOf(0) }
 
                 Row {
                     for (i in 1..5) {
                         Icon(
-                            imageVector = if (i <= rating) Icons.Default.Star else Icons.Outlined.Star,
+                            imageVector = if (i <= state.userRating) Icons.Default.Star else Icons.Outlined.Star,
                             contentDescription = null,
-                            tint = if (i <= rating) Color(0xFFFFC107) else Color.Gray,
+                            tint = if (i <= state.userRating) Color(0xFFFFC107) else Color.Gray,
                             modifier = Modifier
                                 .size(45.dp)
-                                .clickable { rating = i }
+                                .clickable { state.article.id.let { id -> onRatingSelected(id, i.toDouble()) } }
+
                         )
                     }
                 }
@@ -246,8 +252,65 @@ fun DetailPane(
     }
 }
 
+// To zoom-in
+@Composable
+fun ZoomableImage(
+    url: String,
+    description: String
+) {
+    val scope = rememberCoroutineScope()
+    val scale = remember { Animatable(1f) }
+    val offset = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
+
+    AsyncImage(
+        model = url,
+        contentDescription = description,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(479.dp)
+            .pointerInput(Unit) {
+                detectTransformGestures(
+                    onGesture = { _, pan, zoom, _ ->
+                        // maj en temps réel
+                        scope.launch {
+                            scale.snapTo((scale.value * zoom).coerceIn(1f, 5f))
+                            offset.snapTo(offset.value + pan)
+                        }
+                    }
+                )
+            }
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        if (event.changes.all { !it.pressed }) {
+                            // ✅ tous les doigts relâchés → retour animé
+                            scope.launch {
+                                scale.animateTo(1f)
+                                offset.animateTo(Offset.Zero)
+                            }
+                        }
+                    }
+                }
+            }
+            .graphicsLayer(
+                scaleX = scale.value,
+                scaleY = scale.value,
+                translationX = offset.value.x,
+                translationY = offset.value.y
+            )
+    )
+}
+
+
+
+
+
 data class DetailState(
     val article: Article?,
+    val isFavorite: Boolean = false,
+    val userRating: Double = 0.0
 )
 
 @PreviewLightDark
@@ -257,7 +320,6 @@ fun ArticleDetailsPreview() {
         DetailPane(
             onBackClick = {},
             onShareClick = {},
-            favorite = false,
             onFavoriteClick = {},
             state = DetailState(
                 article = Article(
@@ -269,11 +331,11 @@ fun ArticleDetailsPreview() {
                         url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/shoes/1.jpg",
                         description = "Modèle femme qui pose dans la rue en bottes de pluie noires"
                     ),
-                    Category.SHOES,
-                    isFavorite = false
+                    Category.SHOES
                 )
             ),
-            showBack = true
+            showBack = true,
+            onRatingSelected = { _, stars -> }
         )
     }
 }

@@ -13,9 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -25,13 +22,17 @@ class MainViewModel(
 ) : ViewModel() {
 
     private val selectedArticleId = savedStateHandle.getMutableStateFlow<Int?>(KEY_SELECTED_ARTICLE_ID, null)
-
     private val _articles = MutableStateFlow<List<Article>>(emptyList())
-    private val _favorites = MutableStateFlow<Set<Int>>(emptySet())
+    private val _favorites = MutableStateFlow<Map<Int, Boolean>>(emptyMap())
+    private val _ratings = MutableStateFlow<Map<Int, Double>>(emptyMap())
 
     val listState: StateFlow<ListState> =
-        combine(_articles, selectedArticleId) { list, selId ->
-            ListState(articles = list, selectedArticleId = selId)
+        combine(_articles, selectedArticleId, _ratings) { list, selId, ratings ->
+            val adjustedList = list.map { article ->
+                val userRating = ratings[article.id] ?: 0.0
+                article.copy(rate = userRating)
+            }
+            ListState(articles = adjustedList, selectedArticleId = selId)
         }.stateIn(
             viewModelScope,
             WhileSubscribed(5_000),
@@ -40,23 +41,27 @@ class MainViewModel(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val detailState: StateFlow<DetailState> =
-        selectedArticleId
-            .flatMapLatest { id ->
-                if (id == null) {
-                    flowOf(DetailState(article = null))
-                } else {
-                    flow {
-                        val article = repository.getArticleById(id.toString())
-                        emit(DetailState(article = article))
-                    }
-                }
-            }
-            .stateIn(
-                viewModelScope,
-                WhileSubscribed(5_000),
+        combine(selectedArticleId, _favorites, _ratings) { id, favorites, ratings ->
+            if (id == null) {
                 DetailState(article = null)
-            )
+            } else {
+                val article = repository.getArticleById(id.toString())
+                val isFav = favorites[id] ?: false
+                val userRating = ratings[id] ?: 0.0
 
+                DetailState(
+                    article = article?.copy(
+                        likes = article.likes + if (isFav) 1 else 0
+                    ),
+                    isFavorite = isFav,
+                    userRating = userRating
+                )
+            }
+        }.stateIn(
+            viewModelScope,
+            WhileSubscribed(5_000),
+            DetailState(article = null)
+        )
 
     init {
         refresh()
@@ -80,12 +85,17 @@ class MainViewModel(
         savedStateHandle[KEY_SELECTED_ARTICLE_ID] = null
     }
 
+    fun toggleFavorite(articleId: Int) {
+        val currentFavorites = _favorites.value.toMutableMap()
+        val current = currentFavorites[articleId] ?: false
+        currentFavorites[articleId] = !current
+        _favorites.value = currentFavorites
+    }
 
-    fun toggleFavorite(currentArticleId: Int) {
-        val set = _favorites.value.toMutableSet()
-        if (set.contains(currentArticleId)) set.remove(currentArticleId) else set.add(currentArticleId)
-        _favorites.value = set
-        savedStateHandle[KEY_SELECTED_ARTICLE_ID] = currentArticleId
+    fun setUserRating(articleId: Int, rating: Double) {
+        val currentRatings = _ratings.value.toMutableMap()
+        currentRatings[articleId] = rating
+        _ratings.value = currentRatings
     }
 
     companion object {

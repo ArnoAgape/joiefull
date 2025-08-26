@@ -157,7 +157,7 @@ fun ListPane(
 
 data class ListState(
     val articles: List<Article>,
-    val selectedArticleId: Int?,
+    val selectedArticleId: Int?
 )
 
 @PreviewLightDark
