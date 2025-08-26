@@ -1,7 +1,6 @@
 package com.openclassrooms.joiefull.ui.details
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -58,92 +57,38 @@ import com.openclassrooms.joiefull.domain.Category
 import com.openclassrooms.joiefull.domain.Picture
 
 @Composable
-fun ArticleDetailsScreen() {
-
-    val viewModel: DetailsViewModel = hiltViewModel()
-    val articleDto by viewModel.article.collectAsState()
-
-    if (articleDto == null) {
-        Text(
-            text = "Loading...",
-            modifier = Modifier.padding(16.dp)
+fun ArticleDetailsScreen(article: Article? = null) {
+    if (article != null) {
+        // Mode tablette : on a déjà l'objet
+        ArticleDetailsContent(
+            article = article,
+            onBackClick = { /* TODO: gérer le retour tablette (ex: désélectionner) */ },
+            onShareClick = { /* TODO: implémenter un intent de partage */ },
+            onFavoriteClick = { /* TODO: toggle favori */ },
+            favorite = false // valeur initiale (tu peux la gérer dans un remember ou ViewModel)
         )
     } else {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(8.dp)
-        ) {
-            Card(elevation = CardDefaults.cardElevation()) {
-                AsyncImage(
-                    model = articleDto!!.picture.url,
-                    contentDescription = articleDto!!.picture.description,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(479.dp)
-                )
-            }
+        // Mode téléphone : on charge via ViewModel
+        val viewModel: DetailsViewModel = hiltViewModel()
+        val articleFromVm by viewModel.article.collectAsState()
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Column(modifier = Modifier.weight(3f)) {
-                    Text(
-                        text = articleDto!!.name,
-                        style = MaterialTheme.typography.titleSmall,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        text = "${articleDto!!.price} €",
-                        style = MaterialTheme.typography.titleSmall
-                    )
-                }
-
-                Column(
-                    modifier = Modifier.weight(1.3f),
-                    horizontalAlignment = Alignment.End
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(R.drawable.ic_star),
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(3.dp))
-                        Text(
-                            text = articleDto!!.rate?.toString() ?: "-",
-                            style = MaterialTheme.typography.titleSmall
-                        )
-                    }
-
-                    Text(
-                        text = "${articleDto!!.originalPrice} €",
-                        style = MaterialTheme.typography.titleSmall.copy(
-                            textDecoration = TextDecoration.LineThrough,
-                            color = Color.Gray
-                        ),
-                        maxLines = 1
-                    )
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = articleDto!!.picture.description,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
+        if (articleFromVm == null) {
+            Text(
+                text = "Loading...",
+                modifier = Modifier.padding(16.dp)
+            )
+        } else {
+            ArticleDetailsContent(
+                article = articleFromVm!!,
+                onBackClick = { /* ex: navController.popBackStack() */ },
+                onShareClick = { /* TODO: implémenter un intent de partage */ },
+                onFavoriteClick = { /* TODO: toggle favori */ },
+                favorite = false
+            )
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

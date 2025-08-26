@@ -8,17 +8,12 @@ data class ArticleDto(
     val price: Double,
     @Json(name = "original_price") val originalPrice: Double,
     val likes: Int,
-    val pictureDto: PictureDto,
+    @Json(name = "picture") val pictureDto: PictureDto,
     val category: String
 )
 
 data class PictureDto(
     val url: String,
     val description: String
-)
-
-data class SectionDto(
-    val category: String,
-    val articles: List<ArticleDto>
 )
 

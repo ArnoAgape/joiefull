@@ -15,7 +15,8 @@ class ArticleRepository @Inject constructor(private val apiService: ArticleApiSe
     }
 
     suspend fun getArticleById(articleId: String): Article? {
-        return fetchArticleData().find { it.id.toString() == articleId }
+        val id = articleId.toIntOrNull() ?: return null
+        return fetchArticleData().find { it.id == id }
     }
 }
 

@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface ArticleApiService {
 
-    @GET("OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/api/clothes.json")
+    @GET("api/clothes.json")
     suspend fun getArticleData(): List<ArticleDto>
 }

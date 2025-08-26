@@ -1,5 +1,6 @@
 package com.openclassrooms.joiefull.ui.details
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,6 +24,7 @@ class DetailsViewModel @Inject constructor(
 
     init {
         val articleId: String = savedStateHandle["articleId"] ?: ""
+        Log.d("DetailsVM", "SavedStateHandle articleId = $articleId")
         loadArticle(articleId)
     }
 
