@@ -35,6 +35,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,7 +56,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.openclassrooms.joiefull.R
@@ -76,177 +77,184 @@ fun DetailPane(
     onRatingSelected: (articleId: Int, stars: Double) -> Unit
 ) {
     val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(8.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (state.article == null) {
-            Text(stringResource(R.string.no_item_selected))
-        } else {
-            Card(elevation = CardDefaults.cardElevation()) {
-                Box {
-                    ZoomableImage(
-                        url = state.article.picture.url,
-                        description = state.article.picture.description
-                    )
-                    IconButton(
-                        onClick = onBackClick,
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(4.dp)
-                    ) {
-                        if (showBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(R.string.back),
-                            )
-                        }
-                    }
-                    IconButton(
-                        onClick = onShareClick,
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription = stringResource(R.string.share),
+    Scaffold { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(paddingValues),
+        ) {
+            if (state.article == null) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(stringResource(R.string.no_item_selected))
+                }
+            } else {
+                Card(elevation = CardDefaults.cardElevation()) {
+                    Box {
+                        ZoomableImage(
+                            url = state.article.picture.url,
+                            description = state.article.picture.description
                         )
-                    }
-                    Surface(
-                        shape = RoundedCornerShape(46.dp),
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(12.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                        IconButton(
+                            onClick = onBackClick,
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .padding(4.dp)
+                        ) {
+                            if (showBack) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                    contentDescription = stringResource(R.string.back),
+                                )
+                            }
+                        }
+                        IconButton(
+                            onClick = onShareClick,
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(4.dp)
                         ) {
                             Icon(
-                                imageVector = if (state.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                contentDescription =
-                                    if (state.isFavorite) stringResource(R.string.no_favorite)
-                                    else stringResource(R.string.favorite),
-                                tint = if (state.isFavorite) Color.Black else LocalContentColor.current,
-                                modifier = Modifier
-                                    .size(20.dp)
-                                    .clickable { onFavoriteClick() }
+                                imageVector = Icons.Default.Share,
+                                contentDescription = stringResource(R.string.share),
                             )
-                            Spacer(Modifier.width(4.dp))
-                            Text(
-                                text = state.article.likes.toString(),
-                                style = MaterialTheme.typography.titleMedium
-                            )
+                        }
+                        Surface(
+                            shape = RoundedCornerShape(46.dp),
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(12.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                            ) {
+                                Icon(
+                                    imageVector = if (state.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                    contentDescription =
+                                        if (state.isFavorite) stringResource(R.string.no_favorite)
+                                        else stringResource(R.string.favorite),
+                                    tint = if (state.isFavorite) Color.Black else LocalContentColor.current,
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                        .clickable { onFavoriteClick() }
+                                )
+                                Spacer(Modifier.width(4.dp))
+                                Text(
+                                    text = state.article.likes.toString(),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                            }
                         }
                     }
                 }
-            }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Column(modifier = Modifier.weight(3f)) {
-                    Text(
-                        text = state.article.name,
-                        style = MaterialTheme.typography.titleSmall,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1
-                    )
-                    Text(
-                        text = "${state.article.price} €",
-                        style = MaterialTheme.typography.titleSmall
-                    )
-                }
-
-                Column(
-                    modifier = Modifier.weight(1.3f),
-                    horizontalAlignment = Alignment.End
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(R.drawable.ic_star),
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp)
-                        )
-                        Spacer(modifier = Modifier.width(3.dp))
+                    Column(modifier = Modifier.weight(3f)) {
                         Text(
-                            text = state.userRating.toString(),
+                            text = state.article.name,
+                            style = MaterialTheme.typography.titleSmall,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
+                        )
+                        Text(
+                            text = "${state.article.price} €",
                             style = MaterialTheme.typography.titleSmall
                         )
                     }
 
-                    Text(
-                        text = "${state.article.originalPrice} €",
-                        style = MaterialTheme.typography.titleSmall.copy(
-                            textDecoration = TextDecoration.LineThrough,
-                            color = Color.Gray
-                        ),
-                        maxLines = 1
-                    )
-                }
+                    Column(
+                        modifier = Modifier.weight(1.3f),
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Image(
+                                painter = painterResource(R.drawable.ic_star),
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(3.dp))
+                            Text(
+                                text = state.userRating.toString(),
+                                style = MaterialTheme.typography.titleSmall
+                            )
+                        }
 
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = state.article.picture.description,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-            Spacer(modifier = Modifier.height(6.dp))
-            Row(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.Start),
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.img_profile),
-                    contentDescription = stringResource(R.string.profile_picture),
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clip(CircleShape)
-                )
-                Spacer(modifier = Modifier.width(6.dp))
-
-                // RatingBar
-
-                Row {
-                    for (i in 1..5) {
-                        Icon(
-                            imageVector = if (i <= state.userRating) Icons.Default.Star else Icons.Outlined.Star,
-                            contentDescription = null,
-                            tint = if (i <= state.userRating) Color(0xFFFFC107) else Color.Gray,
-                            modifier = Modifier
-                                .size(45.dp)
-                                .clickable { state.article.id.let { id -> onRatingSelected(id, i.toDouble()) } }
-
+                        Text(
+                            text = "${state.article.originalPrice} €",
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                textDecoration = TextDecoration.LineThrough,
+                                color = Color.Gray
+                            ),
+                            maxLines = 1
                         )
                     }
+
                 }
-            }
-            Column(modifier = Modifier.padding(8.dp)) {
-
-                var text by remember { mutableStateOf("") }
-
-                OutlinedTextField(
-                    value = text,
-                    onValueChange = { text = it },
-                    label = { Text(stringResource(R.string.comment)) },
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    shape = RoundedCornerShape(10.dp)
-                )
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Text(
+                        text = state.article.picture.description,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+                Row(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.Start),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.img_profile),
+                        contentDescription = stringResource(R.string.profile_picture),
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    // RatingBar
+
+                    Row {
+                        for (i in 1..5) {
+                            Icon(
+                                imageVector = if (i <= state.userRating) Icons.Default.Star else Icons.Outlined.Star,
+                                contentDescription = null,
+                                tint = if (i <= state.userRating) Color(0xFFFFC107) else Color.Gray,
+                                modifier = Modifier
+                                    .size(45.dp)
+                                    .clickable { state.article.id.let { id -> onRatingSelected(id, i.toDouble()) } }
+
+                            )
+                        }
+                    }
+                }
+                Column(modifier = Modifier.padding(8.dp)) {
+
+                    var text by remember { mutableStateOf("") }
+
+                    OutlinedTextField(
+                        value = text,
+                        onValueChange = { text = it },
+                        label = { Text(stringResource(R.string.comment)) },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                }
             }
         }
     }
@@ -272,7 +280,6 @@ fun ZoomableImage(
             .pointerInput(Unit) {
                 detectTransformGestures(
                     onGesture = { _, pan, zoom, _ ->
-                        // maj en temps réel
                         scope.launch {
                             scale.snapTo((scale.value * zoom).coerceIn(1f, 5f))
                             offset.snapTo(offset.value + pan)
@@ -285,7 +292,6 @@ fun ZoomableImage(
                     while (true) {
                         val event = awaitPointerEvent()
                         if (event.changes.all { !it.pressed }) {
-                            // ✅ tous les doigts relâchés → retour animé
                             scope.launch {
                                 scale.animateTo(1f)
                                 offset.animateTo(Offset.Zero)
@@ -303,17 +309,13 @@ fun ZoomableImage(
     )
 }
 
-
-
-
-
 data class DetailState(
     val article: Article?,
     val isFavorite: Boolean = false,
     val userRating: Double = 0.0
 )
 
-@PreviewLightDark
+@Preview(showBackground = true)
 @Composable
 fun ArticleDetailsPreview() {
     JoiefullTheme {

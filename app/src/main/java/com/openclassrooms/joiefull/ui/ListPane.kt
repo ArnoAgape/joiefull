@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.openclassrooms.joiefull.R
@@ -127,27 +128,30 @@ fun ListPane(
 ) {
     val sections = remember(state.articles) { buildSections(state.articles) }
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+    Scaffold { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentPadding = paddingValues,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
 
-    ) {
-        sections.forEach { section ->
-            item(key = section.category.name) {
-                Text(
-                    text = stringResource(id = section.category.translatedName),
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Spacer(Modifier.height(8.dp))
+        ) {
+            sections.forEach { section ->
+                item(key = section.category.name) {
+                    Text(
+                        text = stringResource(id = section.category.translatedName),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Spacer(Modifier.height(8.dp))
 
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    contentPadding = PaddingValues(horizontal = 4.dp)
-                ) {
-                    items(section.articles, key = { it.id }) { article ->
-                        ArticleCard(article) { onItemClick(article) }
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = PaddingValues(horizontal = 4.dp)
+                    ) {
+                        items(section.articles, key = { it.id }) { article ->
+                            ArticleCard(article) { onItemClick(article) }
+                        }
                     }
                 }
             }
@@ -160,7 +164,7 @@ data class ListState(
     val selectedArticleId: Int?
 )
 
-@PreviewLightDark
+@Preview(showBackground = true)
 @Composable
 fun ListPanePreview() {
     JoiefullTheme {
