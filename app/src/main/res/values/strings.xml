@@ -13,8 +13,10 @@
     <string name="retry">Retry</string>
     <string name="back">Back</string>
     <string name="share">Share</string>
+    <string name="reviews">Reviews</string>
     <string name="favorite">Add to favorite</string>
     <string name="no_favorite">Remove from favorite</string>
+    <string name="evaluate">Evaluate the article with stars</string>
 
     <string name="profile_picture">Your profile picture</string>
     <string name="comment">Share your thoughts on this article here</string>

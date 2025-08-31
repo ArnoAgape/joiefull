@@ -12,8 +12,10 @@
     <string name="retry">Réessayer</string>
     <string name="back">Retour</string>
     <string name="share">Partager</string>
+    <string name="reviews">Avis</string>
     <string name="favorite">Ajouter aux favoris</string>
     <string name="no_favorite">Supprimer des favoris</string>
+    <string name="evaluate">Évalue l\'article avec des étoiles</string>
 
     <string name="profile_picture">Votre photo de profil</string>
     <string name="comment">Partagez ici vos impressions sur cette pièce</string>
