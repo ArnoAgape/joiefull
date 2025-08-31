@@ -1,0 +1,57 @@
+# === Android Studio ===
+.idea/
+*.iml
+
+# === Gradle ===
+.gradle/
+build/
+!gradle-wrapper.jar
+.gradle/cache/
+.gradle/daemon/
+.gradle/native/
+.gradle/wrapper/dists/
+gradle-app.setting
+
+# === Local properties (ex: clé API, config locale) ===
+local.properties
+
+# === Logs & OS files ===
+*.log
+*.swp
+*.DS_Store
+*.bak
+
+# === APKs, test results, reports ===
+*.apk
+*.ap_
+*.hprof
+test-results/
+lint/reports/
+outputs/
+captures/
+
+# === Kotlin/Jetpack Compose specific ===
+/build/
+*.kotlin_module
+
+# === JetBrains IDEs ===
+.idea/
+*.iws
+*.ipr
+*.iml
+out/
+
+# === Generated files ===
+/navigation.xml
+/captures/
+/.cxx/
+
+# === Firebase / Crashlytics (si utilisé) ===
+crashlytics-build.properties
+
+# === Jetpack Compose compiler ===
+.kotlinc/
+
+# === Signing keys / secrets ===
+*.jks
+secrets.properties

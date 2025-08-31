@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_men">hommes</string>
+    <string name="category_women">femmes</string>
+    <string name="category_children">enfants</string>
+
+    <string name="category_tops">Hauts</string>
+    <string name="category_bottoms">Bas</string>
+    <string name="category_shoes">Chaussures</string>
+    <string name="category_accessories">Accessoires</string>
+
+    <string name="retry">Réessayer</string>
+    <string name="back">Retour</string>
+    <string name="share">Partager</string>
+    <string name="favorite">Ajouter aux favoris</string>
+    <string name="no_favorite">Supprimer des favoris</string>
+
+    <string name="profile_picture">Votre photo de profil</string>
+    <string name="comment">Partagez ici vos impressions sur cette pièce</string>
+    <string name="no_item_selected">Aucun élément sélectionné</string>
+</resources>

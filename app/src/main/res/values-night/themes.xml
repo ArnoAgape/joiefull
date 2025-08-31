@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Thème Splash -->
+    <style name="Theme.Joiefull.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Joiefull</item>
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+    <!-- Thème principal -->
+    <style name="Theme.Joiefull" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- tes couleurs / attributs ici -->
+    </style>
+
+</resources>

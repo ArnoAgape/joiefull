@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name" translatable="false">Joiefull</string>
+
+    <string name="category_men">men</string>
+    <string name="category_women">women</string>
+    <string name="category_children">children</string>
+
+    <string name="category_tops">Tops</string>
+    <string name="category_bottoms">Bottoms</string>
+    <string name="category_shoes">Shoes</string>
+    <string name="category_accessories">Accessories</string>
+
+    <string name="retry">Retry</string>
+    <string name="back">Back</string>
+    <string name="share">Share</string>
+    <string name="favorite">Add to favorite</string>
+    <string name="no_favorite">Remove from favorite</string>
+
+    <string name="profile_picture">Your profile picture</string>
+    <string name="comment">Share your thoughts on this article here</string>
+    <string name="no_item_selected">No item selected</string>
+</resources>
