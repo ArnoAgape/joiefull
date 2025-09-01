@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="category_men">hommes</string>
-    <string name="category_women">femmes</string>
-    <string name="category_children">enfants</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    // Accessibilité
+    <string name="original_price">Prix d\'origine %1$s</string>
+    <string name="price">Prix : %1$s</string>
+    <string name="rate">Note : %1$s sur cinq</string>
+    <plurals name="likes" tools:ignore="MissingQuantity">
+        <item quantity="one">%1$d personne a ajouté cet article en favori</item>
+        <item quantity="other">%1$d personnes ont ajouté cet article en favori</item>
+    </plurals>
+    <plurals name="review_with_star" tools:ignore="MissingQuantity">
+        <item quantity="one">Attribuez %1$d étoile</item>
+        <item quantity="other">Attribuez %1$d étoiles</item>
+    </plurals>
+    <string name="article">Nom de l\'article : %1$s</string>
+    <string name="description">Image de l\'article</string>
 
     <string name="category_tops">Hauts</string>
     <string name="category_bottoms">Bas</string>

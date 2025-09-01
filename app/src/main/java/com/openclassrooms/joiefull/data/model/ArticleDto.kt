@@ -14,6 +14,6 @@ data class ArticleDto(
 
 data class PictureDto(
     val url: String,
-    val description: String
+    val description: String?
 )
 

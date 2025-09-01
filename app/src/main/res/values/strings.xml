@@ -1,9 +1,20 @@
 <resources>
     <string name="app_name" translatable="false">Joiefull</string>
 
-    <string name="category_men">men</string>
-    <string name="category_women">women</string>
-    <string name="category_children">children</string>
+    // Accessibility
+    <string name="original_price">Original price %1$s</string>
+    <string name="price">Price: %1$s</string>
+    <string name="rate">Rate: %1$s out of five</string>
+    <plurals name="likes">
+        <item quantity="one">%1$d person has added this article as favorite</item>
+        <item quantity="other">%1$d people have added this article as favorite</item>
+    </plurals>
+    <plurals name="review_with_star">
+        <item quantity="one">Attribute %1$d star</item>
+        <item quantity="other">Attribute %1$d stars</item>
+    </plurals>
+    <string name="article">Article name: %1$s</string>
+    <string name="description">Article image</string>
 
     <string name="category_tops">Tops</string>
     <string name="category_bottoms">Bottoms</string>

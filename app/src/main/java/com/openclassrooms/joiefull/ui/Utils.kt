@@ -13,4 +13,9 @@ object Utils {
         }
     }
 
+    fun formatRateForAccessibility(rate: Double): String {
+        val newRate = rate.toInt()
+        return "$newRate"
+    }
+
 }

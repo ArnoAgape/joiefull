@@ -17,7 +17,7 @@ data class Article(
 
 data class Picture(
     val url: String,
-    val description: String
+    val description: String?
 )
 
 data class Section(
