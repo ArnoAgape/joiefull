@@ -108,6 +108,7 @@ private fun MainScreen(
                 DetailPane(
                     state = detailState,
                     showBack = navigator.scaffoldValue.secondary == PaneAdaptedValue.Hidden,
+                    showNoItem = navigator.scaffoldValue.secondary == PaneAdaptedValue.Hidden,
                     onBackClick = {
                         onDetailBackClick()
                         scope.launch {

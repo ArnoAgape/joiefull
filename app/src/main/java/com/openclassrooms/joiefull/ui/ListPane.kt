@@ -1,5 +1,6 @@
 package com.openclassrooms.joiefull.ui
 
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,9 +33,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.openclassrooms.joiefull.R
@@ -49,6 +52,18 @@ fun ArticleCard(
     article: Article,
     onClick: (Article) -> Unit
 ) {
+    val articleName = stringResource(
+        R.string.article,
+        article.name
+    )
+    val priceDescription = stringResource(
+        R.string.price,
+        Utils.formatPriceForAccessibility(article.price))
+    val rateDescription = stringResource(R.string.rate,
+        article.rate)
+    val originalPriceDescription = stringResource(
+        R.string.original_price,
+        Utils.formatPriceForAccessibility(article.originalPrice))
     Column(
         modifier = Modifier
             .width(198.dp)
@@ -59,7 +74,7 @@ fun ArticleCard(
         Card(elevation = CardDefaults.cardElevation()) {
             AsyncImage(
                 model = article.picture.url,
-                contentDescription = article.picture.description,
+                contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .width(198.dp)
@@ -78,11 +93,17 @@ fun ArticleCard(
                     text = article.name,
                     style = MaterialTheme.typography.titleSmall,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.semantics {
+                        contentDescription = articleName
+                    }
                 )
                 Text(
                     text = article.price.toString() + " €",
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.semantics {
+                        contentDescription = priceDescription
+                    }
                 )
             }
 
@@ -99,7 +120,10 @@ fun ArticleCard(
                     Spacer(modifier = Modifier.width(3.dp))
                     Text(
                         text = article.rate.toString(),
-                        style = MaterialTheme.typography.titleSmall
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.semantics {
+                            contentDescription = rateDescription
+                        }
                     )
                 }
 
@@ -109,6 +133,9 @@ fun ArticleCard(
                         textDecoration = TextDecoration.LineThrough,
                         color = Color.Gray
                     ),
+                    modifier = Modifier.semantics {
+                        contentDescription = originalPriceDescription
+                    },
                     maxLines = 1
                 )
             }
@@ -164,7 +191,7 @@ data class ListState(
     val selectedArticleId: Int?
 )
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun ListPanePreview() {
     JoiefullTheme {

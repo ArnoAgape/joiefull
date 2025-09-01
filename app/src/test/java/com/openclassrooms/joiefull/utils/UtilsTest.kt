@@ -1,4 +1,4 @@
-package com.openclassrooms.joiefull.repository.utils
+package com.openclassrooms.joiefull.utils
 
 import com.openclassrooms.joiefull.ui.Utils
 import kotlin.test.Test

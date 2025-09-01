@@ -4,6 +4,9 @@ import com.openclassrooms.joiefull.data.model.ArticleDto
 import com.openclassrooms.joiefull.data.model.PictureDto
 import com.openclassrooms.joiefull.data.network.ArticleApiService
 import com.openclassrooms.joiefull.data.repository.ArticleRepository
+import com.openclassrooms.joiefull.domain.Article
+import com.openclassrooms.joiefull.domain.Category
+import com.openclassrooms.joiefull.domain.Picture
 import com.openclassrooms.joiefull.domain.toDomain
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -37,13 +40,21 @@ class ArticleRepositoryTest {
             category = "BOTTOMS"
         )
         coEvery { api.getArticleData() } returns listOf(articleDto)
-        val expected = articleDto.toDomain()
+        val expected = Article(0,
+            "Jean pour femme",
+            49.99, 59.99,
+            0.0, 55,
+            Picture(
+                url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/bottoms/1.jpg",
+                description = "Modèle femme qui porte un jean et un haut jaune"
+            ),
+            category = Category.BOTTOMS
+        )
 
         // Act
         val result = repo.fetchArticleData()
 
         // Assert
-        assertTrue(result.isNotEmpty())
         assertEquals(listOf(expected), result)
     }
 
@@ -61,7 +72,16 @@ class ArticleRepositoryTest {
             category = "BOTTOMS"
         )
         coEvery { api.getArticleData() } returns listOf(articleDto)
-        val expected = articleDto.toDomain()
+        val expected = Article(0,
+            "Jean pour femme",
+            49.99, 59.99,
+            0.0, 55,
+            Picture(
+                url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/bottoms/1.jpg",
+                description = "Modèle femme qui porte un jean et un haut jaune"
+            ),
+            category = Category.BOTTOMS
+        )
 
         // Act
         val result = repo.getArticleById("0")

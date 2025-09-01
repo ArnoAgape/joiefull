@@ -1,10 +1,9 @@
 package com.openclassrooms.joiefull.ui
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.VectorConverter
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,35 +41,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import coil.compose.AsyncImage
 import com.openclassrooms.joiefull.R
 import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.domain.Category
 import com.openclassrooms.joiefull.domain.Picture
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailPane(
     state: DetailState,
     showBack: Boolean,
+    showNoItem: Boolean,
     onBackClick: () -> Unit,
     onShareClick: () -> Unit,
     onFavoriteClick: () -> Unit,
@@ -91,14 +90,36 @@ fun DetailPane(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(stringResource(R.string.no_item_selected))
+                    if (!showNoItem) {
+                        Text(stringResource(R.string.no_item_selected))
+                    }
                 }
             } else {
-                Card(elevation = CardDefaults.cardElevation()) {
+                val priceDescription = stringResource(
+                    R.string.price,
+                    Utils.formatPriceForAccessibility(state.article.price)
+                )
+                val rateDescription = stringResource(
+                    R.string.rate,
+                    state.article.rate
+                )
+                val originalPriceDescription = stringResource(
+                    R.string.original_price,
+                    Utils.formatPriceForAccessibility(state.article.originalPrice)
+                )
+                val likesDescription = pluralStringResource(
+                    R.plurals.likes,
+                    state.article.likes,
+                    state.article.likes
+                )
+                Card(
+                    elevation = CardDefaults.cardElevation(),
+                    modifier = Modifier.padding(8.dp)
+                ) {
                     Box {
-                        ZoomableImage(
+                        ImageGallery(
                             url = state.article.picture.url,
-                            description = state.article.picture.description
+                            description = stringResource(R.string.description)
                         )
                         IconButton(
                             onClick = onBackClick,
@@ -139,7 +160,7 @@ fun DetailPane(
                                     contentDescription =
                                         if (state.isFavorite) stringResource(R.string.no_favorite)
                                         else stringResource(R.string.favorite),
-                                    tint = if (state.isFavorite) Color.Black else LocalContentColor.current,
+                                    tint = if (state.isFavorite) MaterialTheme.colorScheme.primary else LocalContentColor.current,
                                     modifier = Modifier
                                         .size(20.dp)
                                         .clickable { onFavoriteClick() }
@@ -147,7 +168,11 @@ fun DetailPane(
                                 Spacer(Modifier.width(4.dp))
                                 Text(
                                     text = state.article.likes.toString(),
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.semantics {
+                                        contentDescription = likesDescription
+                                    }
                                 )
                             }
                         }
@@ -163,12 +188,17 @@ fun DetailPane(
                         Text(
                             text = state.article.name,
                             style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.primary,
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
                         )
                         Text(
                             text = "${state.article.price} €",
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.semantics {
+                                contentDescription = priceDescription
+                            }
                         )
                     }
 
@@ -185,7 +215,11 @@ fun DetailPane(
                             Spacer(modifier = Modifier.width(3.dp))
                             Text(
                                 text = state.userRating.toString(),
-                                style = MaterialTheme.typography.titleSmall
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.semantics {
+                                    contentDescription = rateDescription
+                                }
                             )
                         }
 
@@ -195,6 +229,10 @@ fun DetailPane(
                                 textDecoration = TextDecoration.LineThrough,
                                 color = Color.Gray
                             ),
+                            modifier = Modifier.semantics {
+                                contentDescription = originalPriceDescription
+                            },
+                            color = MaterialTheme.colorScheme.primary,
                             maxLines = 1
                         )
                     }
@@ -206,8 +244,9 @@ fun DetailPane(
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = state.article.picture.description,
-                        style = MaterialTheme.typography.bodyMedium
+                        text = state.article.picture.description ?: "",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
                 Spacer(modifier = Modifier.height(6.dp))
@@ -227,16 +266,26 @@ fun DetailPane(
                     Spacer(modifier = Modifier.width(6.dp))
 
                     // RatingBar
-
                     Row {
                         for (i in 1..5) {
+                            val reviewDescription = pluralStringResource(
+                                R.plurals.review_with_star,
+                                count = i, i
+                            )
                             Icon(
                                 imageVector = if (i <= state.userRating) Icons.Default.Star else Icons.Outlined.Star,
-                                contentDescription = null,
+                                contentDescription = reviewDescription,
                                 tint = if (i <= state.userRating) Color(0xFFFFC107) else Color.Gray,
                                 modifier = Modifier
                                     .size(45.dp)
-                                    .clickable { state.article.id.let { id -> onRatingSelected(id, i.toDouble()) } }
+                                    .clickable {
+                                        state.article.id.let { id ->
+                                            onRatingSelected(
+                                                id,
+                                                i.toDouble()
+                                            )
+                                        }
+                                    }
 
                             )
                         }
@@ -262,13 +311,8 @@ fun DetailPane(
 
 // To zoom-in
 @Composable
-fun ZoomableImage(
-    url: String,
-    description: String
-) {
-    val scope = rememberCoroutineScope()
-    val scale = remember { Animatable(1f) }
-    val offset = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
+fun ImageGallery(url: String, description: String) {
+    var selectedImage by remember { mutableStateOf<String?>(null) }
 
     AsyncImage(
         model = url,
@@ -277,37 +321,32 @@ fun ZoomableImage(
         modifier = Modifier
             .fillMaxWidth()
             .height(479.dp)
-            .pointerInput(Unit) {
-                detectTransformGestures(
-                    onGesture = { _, pan, zoom, _ ->
-                        scope.launch {
-                            scale.snapTo((scale.value * zoom).coerceIn(1f, 5f))
-                            offset.snapTo(offset.value + pan)
-                        }
-                    }
+            .clickable { selectedImage = url }
+    )
+    // Full screen image
+    if (selectedImage != null) {
+        Dialog(
+            onDismissRequest = { selectedImage = null }, // closes when click
+            properties = DialogProperties(usePlatformDefaultWidth = false) // full screen
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black)
+                    .clickable { selectedImage = null }, // closes when click
+                contentAlignment = Alignment.Center
+            ) {
+                AsyncImage(
+                    model = selectedImage,
+                    contentDescription = description,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
-            .pointerInput(Unit) {
-                awaitPointerEventScope {
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        if (event.changes.all { !it.pressed }) {
-                            scope.launch {
-                                scale.animateTo(1f)
-                                offset.animateTo(Offset.Zero)
-                            }
-                        }
-                    }
-                }
-            }
-            .graphicsLayer(
-                scaleX = scale.value,
-                scaleY = scale.value,
-                translationX = offset.value.x,
-                translationY = offset.value.y
-            )
-    )
+        }
+    }
 }
+
 
 data class DetailState(
     val article: Article?,
@@ -315,7 +354,7 @@ data class DetailState(
     val userRating: Double = 0.0
 )
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun ArticleDetailsPreview() {
     JoiefullTheme {
@@ -323,6 +362,7 @@ fun ArticleDetailsPreview() {
             onBackClick = {},
             onShareClick = {},
             onFavoriteClick = {},
+            // onImageClick = {},
             state = DetailState(
                 article = Article(
                     0,
@@ -337,6 +377,7 @@ fun ArticleDetailsPreview() {
                 )
             ),
             showBack = true,
+            showNoItem = false,
             onRatingSelected = { _, stars -> }
         )
     }
