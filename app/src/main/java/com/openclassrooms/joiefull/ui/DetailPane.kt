@@ -122,29 +122,43 @@ fun DetailPane(
                             url = state.article.picture.url,
                             description = stringResource(R.string.description)
                         )
-                        IconButton(
-                            onClick = onBackClick,
-                            modifier = Modifier
-                                .align(Alignment.TopStart)
-                                .padding(4.dp)
-                        ) {
-                            if (showBack) {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                    contentDescription = stringResource(R.string.back),
-                                )
+                        if (showBack) {
+                            Surface(
+                                shape = RoundedCornerShape(46.dp),
+                                modifier = Modifier
+                                    .align(Alignment.TopStart)
+                                    .padding(4.dp)
+                            ) {
+                                IconButton(
+                                    onClick = onBackClick,
+                                    modifier = Modifier
+                                        .align(Alignment.TopStart)
+                                        .padding(1.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                        contentDescription = stringResource(R.string.back),
+                                    )
+                                }
                             }
                         }
-                        IconButton(
-                            onClick = onShareClick,
+                        Surface(
+                            shape = RoundedCornerShape(46.dp),
                             modifier = Modifier
                                 .align(Alignment.TopEnd)
                                 .padding(4.dp)
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Share,
-                                contentDescription = stringResource(R.string.share),
-                            )
+                            IconButton(
+                                onClick = onShareClick,
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .padding(1.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Share,
+                                    contentDescription = stringResource(R.string.share),
+                                )
+                            }
                         }
                         Surface(
                             shape = RoundedCornerShape(46.dp),

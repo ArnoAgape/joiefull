@@ -1,6 +1,5 @@
 package com.openclassrooms.joiefull.ui
 
-import android.R.attr.handle
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.openclassrooms.joiefull.data.repository.ArticleRepository
@@ -10,7 +9,6 @@ import com.openclassrooms.joiefull.domain.Picture
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
