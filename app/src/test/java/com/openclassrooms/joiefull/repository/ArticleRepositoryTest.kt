@@ -7,14 +7,12 @@ import com.openclassrooms.joiefull.data.repository.ArticleRepository
 import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.domain.Category
 import com.openclassrooms.joiefull.domain.Picture
-import com.openclassrooms.joiefull.domain.toDomain
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class ArticleRepositoryTest {
 

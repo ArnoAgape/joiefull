@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
             JoiefullTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                 }
-                val viewModel by viewModels<MainViewModel> { MainViewModel.Factory }
+                val viewModel by viewModels<MainViewModel> { MainViewModel.provideFactory() }
                 MainScreen(viewModel = viewModel)
             }
         }

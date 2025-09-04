@@ -1,5 +1,7 @@
 package com.openclassrooms.joiefull.ui
 
+import android.icu.text.NumberFormat
+import java.util.Locale
 import kotlin.math.roundToInt
 
 object Utils {
@@ -13,5 +15,9 @@ object Utils {
         } else {
             "$euros euros $cents"
         }
+    }
+    fun formatAmount(amount: Double, locale: Locale): String {
+        val formatter = NumberFormat.getCurrencyInstance(locale)
+        return formatter.format(amount)
     }
 }

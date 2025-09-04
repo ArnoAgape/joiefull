@@ -101,15 +101,17 @@ class MainViewModel(
     companion object {
         private const val KEY_SELECTED_ARTICLE_ID = "selected_article_id"
 
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun provideFactory(
+            repository: ArticleRepository? = null,
+            savedStateHandle: SavedStateHandle = SavedStateHandle()
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val savedStateHandle = SavedStateHandle()
-
-                val retrofit = NetworkModule.provideRetrofit()
-                val api = retrofit.create(ArticleApiService::class.java)
-                val repo = ArticleRepository(api)
-
+                val repo = repository ?: run {
+                    val retrofit = NetworkModule.provideRetrofit()
+                    val api = retrofit.create(ArticleApiService::class.java)
+                    ArticleRepository(api)
+                }
                 return MainViewModel(savedStateHandle, repo) as T
             }
         }

@@ -36,7 +36,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -46,6 +45,7 @@ import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.domain.Category
 import com.openclassrooms.joiefull.domain.Section
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
+import java.util.Locale
 
 @Composable
 fun ArticleCard(
@@ -58,12 +58,16 @@ fun ArticleCard(
     )
     val priceDescription = stringResource(
         R.string.price,
-        Utils.formatPriceForAccessibility(article.price))
-    val rateDescription = stringResource(R.string.rate,
-        article.rate)
+        Utils.formatPriceForAccessibility(article.price)
+    )
+    val rateDescription = stringResource(
+        R.string.rate,
+        article.rate
+    )
     val originalPriceDescription = stringResource(
         R.string.original_price,
-        Utils.formatPriceForAccessibility(article.originalPrice))
+        Utils.formatPriceForAccessibility(article.originalPrice)
+    )
     Column(
         modifier = Modifier
             .width(198.dp)
@@ -98,8 +102,11 @@ fun ArticleCard(
                         contentDescription = articleName
                     }
                 )
+                val articlePrice = article.price
+                val articlePriceWithCurrency =
+                    Utils.formatAmount(articlePrice, Locale.getDefault())
                 Text(
-                    text = article.price.toString() + " €",
+                    text = articlePriceWithCurrency,
                     style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.semantics {
                         contentDescription = priceDescription
@@ -126,9 +133,11 @@ fun ArticleCard(
                         }
                     )
                 }
-
+                val articleOriginalPrice = article.originalPrice
+                val articleOriginalPriceWithCurrency =
+                    Utils.formatAmount(articleOriginalPrice, Locale.getDefault())
                 Text(
-                    text = article.originalPrice.toString() + " €",
+                    text = articleOriginalPriceWithCurrency,
                     style = MaterialTheme.typography.titleSmall.copy(
                         textDecoration = TextDecoration.LineThrough,
                         color = Color.Gray

@@ -87,6 +87,7 @@ dependencies {
     implementation(libs.androidx.material3.window.size.class1)
 
     // Tests
+    testImplementation(libs.turbine)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation (libs.kotlinx.coroutines.test)

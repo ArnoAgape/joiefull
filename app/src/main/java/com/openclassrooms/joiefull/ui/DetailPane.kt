@@ -63,6 +63,7 @@ import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.domain.Category
 import com.openclassrooms.joiefull.domain.Picture
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -192,8 +193,11 @@ fun DetailPane(
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
                         )
+                        val articlePrice = state.article.price
+                        val articlePriceWithCurrency =
+                            Utils.formatAmount(articlePrice, Locale.getDefault())
                         Text(
-                            text = "${state.article.price} €",
+                            text = articlePriceWithCurrency,
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.semantics {
@@ -222,9 +226,11 @@ fun DetailPane(
                                 }
                             )
                         }
-
+                        val articleOriginalPrice = state.article.originalPrice
+                        val articleOriginalPriceWithCurrency =
+                            Utils.formatAmount(articleOriginalPrice, Locale.getDefault())
                         Text(
-                            text = "${state.article.originalPrice} €",
+                            text = articleOriginalPriceWithCurrency,
                             style = MaterialTheme.typography.titleSmall.copy(
                                 textDecoration = TextDecoration.LineThrough,
                                 color = Color.Gray
