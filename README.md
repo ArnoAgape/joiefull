@@ -62,14 +62,16 @@ com.openclassrooms.joiefull
 ## 📸 Screenshots
 
 App on a phone:
-![Joiefull phone screenshots](images/phoneScreenshots/phone_1.png)
-![Joiefull phone screenshots](images/phoneScreenshots/phone_2.png)
-![Joiefull phone screenshots](images/phoneScreenshots/phone_3.png)
+<p align="center">
+  <img src="images/phoneScreenshots/phone_1.png" alt="Phone 1" width="30%"/>
+  <img src="images/phoneScreenshots/phone_2.png" alt="Phone 2" width="30%"/>
+  <img src="images/phoneScreenshots/phone_3.png" alt="Phone 3" width="30%"/>
+</p>
 
-App on a tablet:
-![Joiefull phone screenshots](images/tabletScreenshots/tablet_1.png)
-![Joiefull phone screenshots](images/tabletScreenshots/tablet_2.png)
-
+<p align="center">
+  <img src="images/tabletScreenshots/tablet_1.png" alt="Tablet 1" width="45%"/>
+  <img src="images/tabletScreenshots/tablet_2.png" alt="Tablet 2" width="45%"/>
+</p>
 
 - Home screen
 - Detail screen (phone)
