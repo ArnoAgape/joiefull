@@ -60,7 +60,16 @@ com.openclassrooms.joiefull
 ---
 
 ## 📸 Screenshots
-_Add your app screenshots here:_
+
+App on a phone:
+![Joiefull phone screenshots](images/phoneScreenshots/phone_1.png)
+![Joiefull phone screenshots](images/phoneScreenshots/phone_2.png)
+![Joiefull phone screenshots](images/phoneScreenshots/phone_3.png)
+
+App on a tablet:
+![Joiefull phone screenshots](images/tabletScreenshots/tablet_1.png)
+![Joiefull phone screenshots](images/tabletScreenshots/tablet_2.png)
+
 
 - Home screen
 - Detail screen (phone)
