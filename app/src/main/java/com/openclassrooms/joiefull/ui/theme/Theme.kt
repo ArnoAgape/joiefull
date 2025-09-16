@@ -9,15 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val LightColors = lightColorScheme(
-    background = Color(0xFFFFFFFF),        // Blanc
-    onBackground = Color(0xFF000000),      // Texte sur fond clair = noir
-    primary = Color(0xFF000000)            // Couleur des titres (ici noir)
+    background = Color(0xFFFFFFFF),
+    onBackground = Color(0xFF000000),
+    primary = Color(0xFF000000)
 )
 
 private val DarkColors = darkColorScheme(
-    background = Color(0xFF000000),        // Noir
-    onBackground = Color(0xFFFFFFFF),      // Texte sur fond sombre = blanc
-    primary = Color(0xFFFFFFFF)            // Couleur des titres (ici blanc)
+    background = Color(0xFF000000),
+    onBackground = Color(0xFFFFFFFF),
+    primary = Color(0xFFFFFFFF)
 )
 
 @Composable

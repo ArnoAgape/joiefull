@@ -64,14 +64,13 @@ class MainViewModelTest {
         val handle = SavedStateHandle(mapOf("selected_article_id" to 4))
         println("🔍 savedStateHandle['selected_article_id'] = ${handle.get<Int>("selected_article_id")}")
 
-        viewModel = MainViewModel.provideFactory(repo, handle)
-            .create(MainViewModel::class.java)
+        viewModel = MainViewModel( handle, repo)
     }
 
     @Test
     fun `listState shows all articles`() = runTest {
         viewModel.listState.test {
-            skipItems(1)
+            skipItems(1) // skip initial state
 
             val filtered = awaitItem()
 
@@ -84,7 +83,7 @@ class MainViewModelTest {
     @Test
     fun `detailState shows one article`() = runTest {
         viewModel.detailState.test {
-            skipItems(1)
+            skipItems(1) // skip initial state
 
             val state = awaitItem()
 
@@ -101,7 +100,7 @@ class MainViewModelTest {
     @Test
     fun `setUserRating updates detailState`() = runTest {
         viewModel.detailState.test {
-            skipItems(1)
+            skipItems(1) // skip initial state
 
             val initial = awaitItem()
 

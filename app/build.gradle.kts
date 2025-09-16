@@ -80,7 +80,7 @@ dependencies {
     implementation(libs.converter.moshi)
 
     // Coil (for pictures)
-    implementation(libs.coil.compose)
+    implementation(libs.coil3.coil.compose)
 
     // Adapter Window Size
     implementation(libs.androidx.adaptive)

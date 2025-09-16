@@ -207,11 +207,8 @@ fun DetailPane(
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
                         )
-                        val articlePrice = state.article.price
-                        val articlePriceWithCurrency =
-                            Utils.formatAmount(articlePrice, Locale.getDefault())
                         Text(
-                            text = articlePriceWithCurrency,
+                            text = Utils.formatAmount(state.article.price, Locale.getDefault()),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.semantics {
