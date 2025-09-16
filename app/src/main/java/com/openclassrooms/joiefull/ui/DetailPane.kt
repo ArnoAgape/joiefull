@@ -57,7 +57,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.openclassrooms.joiefull.R
 import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.domain.Category
@@ -379,7 +379,6 @@ fun ArticleDetailsPreview() {
             onBackClick = {},
             onShareClick = {},
             onFavoriteClick = {},
-            // onImageClick = {},
             state = DetailState(
                 article = Article(
                     0,
