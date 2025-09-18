@@ -3,6 +3,7 @@ activityCompose = "1.11.0"
 adaptiveLayout = "1.1.0"
 agp = "8.12.3"
 coilComposeVersion = "3.3.0"
+coilNetworkOkhttp = "3.3.0"
 coreSplashscreen = "1.0.1"
 kotlin = "2.2.20"
 coreKtx = "1.17.0"
@@ -20,7 +21,7 @@ loggingInterceptor = "5.1.0"
 kotlinxCoroutinesTest = "1.10.2"
 navigationRuntimeKtx = "2.9.4"
 adaptiveNavigation = "1.1.0"
-lifecycleViewmodelKtx = "2.9.3"
+lifecycleViewmodelKtx = "2.9.4"
 paletteKtx = "1.0.0"
 turbine = "1.2.1"
 
@@ -36,6 +37,7 @@ androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilNetworkOkhttp" }
 coil3-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilComposeVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }

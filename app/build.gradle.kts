@@ -81,6 +81,7 @@ dependencies {
 
     // Coil (for pictures)
     implementation(libs.coil3.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     // Adapter Window Size
     implementation(libs.androidx.adaptive)

@@ -1,6 +1,5 @@
 package com.openclassrooms.joiefull.ui
 
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,14 +30,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.openclassrooms.joiefull.R
 import com.openclassrooms.joiefull.data.FakeData
 import com.openclassrooms.joiefull.domain.Article
@@ -77,7 +80,10 @@ fun ArticleCard(
         // Image
         Card(elevation = CardDefaults.cardElevation()) {
             AsyncImage(
-                model = article.picture.url,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(article.picture.url)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
