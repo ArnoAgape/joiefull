@@ -82,8 +82,7 @@ fun ArticleCard(
     Column(
         modifier = Modifier
             .width(198.dp)
-            .clickable { onClick(article) },
-        verticalArrangement = Arrangement.SpaceBetween
+            .clickable { onClick(article) }
     ) {
         // Image
         Card(elevation = CardDefaults.cardElevation()) {
@@ -99,12 +98,10 @@ fun ArticleCard(
                     .height(198.dp)
             )
         }
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(4.dp)
         ) {
             Column(modifier = Modifier.weight(3f)) {
                 Text(

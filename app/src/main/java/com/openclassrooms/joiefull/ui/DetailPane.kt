@@ -315,7 +315,6 @@ fun DetailPane(
                                             )
                                         }
                                     }
-
                             )
                         }
                     }
