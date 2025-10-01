@@ -1,7 +1,5 @@
 package com.openclassrooms.joiefull.di
 
-import com.openclassrooms.joiefull.data.network.ArticleApiService
-import com.openclassrooms.joiefull.data.repository.ArticleRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -22,17 +20,7 @@ object NetworkModule {
             .build()
     }
 
-    private val apiSingleton: ArticleApiService by lazy {
-        retrofitSingleton.create(ArticleApiService::class.java)
-    }
-
-    private val repoSingleton: ArticleRepository by lazy {
-        ArticleRepository(apiSingleton)
-    }
-
     fun provideRetrofit(): Retrofit = retrofitSingleton
-    fun provideArticleApiService(): ArticleApiService = apiSingleton
-    fun provideArticleRepository(): ArticleRepository = repoSingleton
 
     private fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
