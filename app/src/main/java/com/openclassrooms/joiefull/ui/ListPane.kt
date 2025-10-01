@@ -50,6 +50,14 @@ import com.openclassrooms.joiefull.domain.Section
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
 import java.util.Locale
 
+/**
+ * Displays an article as a card in the list/grid view.
+ *
+ * Shows image, price, rating, and original price with accessibility support.
+ *
+ * @param article The article to display.
+ * @param onClick Callback when the article is clicked.
+ */
 @Composable
 fun ArticleCard(
     article: Article,
@@ -158,11 +166,23 @@ fun ArticleCard(
     }
 }
 
+/**
+ * Builds sections of articles grouped by [Category].
+ *
+ * @param all List of all articles.
+ * @return A list of [Section] objects grouped by category.
+ */
 fun buildSections(all: List<Article>): List<Section> =
     Category.entries
         .map { cat -> Section(cat, all.filter { it.category == cat }) }
         .filter { it.articles.isNotEmpty() }
 
+/**
+ * Displays the list pane containing sections of articles.
+ *
+ * @param state Current [ListState].
+ * @param onItemClick Callback when an article is clicked.
+ */
 @Composable
 fun ListPane(
     state: ListState,
@@ -201,6 +221,12 @@ fun ListPane(
     }
 }
 
+/**
+ * UI state for the article list screen.
+ *
+ * @property articles The list of articles.
+ * @property selectedArticleId ID of the selected article, or null if none.
+ */
 data class ListState(
     val articles: List<Article>,
     val selectedArticleId: Int?

@@ -4,7 +4,12 @@ import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.domain.Category
 import com.openclassrooms.joiefull.domain.Picture
 
+/**
+ * Provides fake article data for testing and preview purposes.
+ */
 object FakeData {
+
+    /** A predefined list of articles. */
     val articles = listOf(
         Article(
             0,
@@ -94,5 +99,18 @@ object FakeData {
             ),
             Category.SHOES
         )
+    )
+
+    /** A single fake article. */
+    val article = Article(
+        0,
+        "Bottes noires pour l'automne",
+        99.99, 119.99,
+        4.3, 55,
+        picture = Picture(
+            url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/shoes/1.jpg",
+            description = "Modèle femme qui pose dans la rue en bottes de pluie noires"
+        ),
+        Category.SHOES
     )
 }

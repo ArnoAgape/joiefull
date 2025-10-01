@@ -15,7 +15,6 @@ import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.PaneAdaptedValue
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
@@ -33,8 +32,12 @@ import com.openclassrooms.joiefull.domain.Article
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
 import kotlinx.coroutines.launch
 
+/**
+ * Main entry point activity for the Joiefull app.
+ *
+ * Sets up the theme and injects the [MainViewModel].
+ */
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         setTheme(R.style.Theme_Joiefull)
@@ -50,6 +53,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Top-level main screen combining list and detail panes.
+ *
+ * @param viewModel The [MainViewModel] providing state and callbacks.
+ */
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
     val state by viewModel.listState.collectAsStateWithLifecycle()
@@ -65,6 +73,17 @@ fun MainScreen(viewModel: MainViewModel) {
     )
 }
 
+/**
+ * Adaptive layout displaying the article list and detail side by side
+ * (tablet/landscape) or in separate screens (phone/portrait).
+ *
+ * @param state List screen state.
+ * @param detailState Detail screen state.
+ * @param onItemClick Callback for selecting an article.
+ * @param onDetailBackClick Callback for back navigation from detail.
+ * @param onToggleFavorite Callback for toggling favorites.
+ * @param onRatingSelected Callback when the user selects a rating.
+ */
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 private fun MainScreen(
@@ -125,7 +144,7 @@ private fun MainScreen(
                             context.startActivity(
                                 Intent.createChooser(
                                     intent,
-                                    "Share..."
+                                    R.string.share.toString()
                                 )
                             )
                         }
@@ -152,7 +171,8 @@ fun MainScreenPreview() {
             state = ListState(articles = FakeData.articles, selectedArticleId = selectedItemId),
             detailState = DetailState(
                 article = FakeData.articles.first { it.id == selectedItemId },
-                userRating = userRating),
+                userRating = userRating
+            ),
             onItemClick = { selectedItemId = it.id },
             onDetailBackClick = {},
             onToggleFavorite = { id ->

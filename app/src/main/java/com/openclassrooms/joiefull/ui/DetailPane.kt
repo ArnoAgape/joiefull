@@ -1,6 +1,5 @@
 package com.openclassrooms.joiefull.ui
 
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,6 +49,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -59,12 +59,24 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import coil3.compose.AsyncImage
 import com.openclassrooms.joiefull.R
+import com.openclassrooms.joiefull.data.FakeData
 import com.openclassrooms.joiefull.domain.Article
-import com.openclassrooms.joiefull.domain.Category
-import com.openclassrooms.joiefull.domain.Picture
 import com.openclassrooms.joiefull.ui.theme.JoiefullTheme
 import java.util.Locale
 
+/**
+ * Displays the detail pane for an article.
+ *
+ * Handles back navigation, sharing, favorites, rating, and accessibility descriptions.
+ *
+ * @param state The current [DetailState] containing article details.
+ * @param showBack Whether the back button should be visible.
+ * @param showNoItem Whether to show a placeholder when no article is selected.
+ * @param onBackClick Callback for back navigation.
+ * @param onShareClick Callback for sharing the article.
+ * @param onFavoriteClick Callback for toggling favorite state.
+ * @param onRatingSelected Callback when the user selects a rating.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailPane(
@@ -326,7 +338,12 @@ fun DetailPane(
     }
 }
 
-// To zoom-in
+/**
+ * Displays an image gallery with zoom-in support.
+ *
+ * @param url The image URL.
+ * @param description Accessibility description for the image.
+ */
 @Composable
 fun ImageGallery(url: String, description: String) {
     var selectedImage by remember { mutableStateOf<String?>(null) }
@@ -364,7 +381,13 @@ fun ImageGallery(url: String, description: String) {
     }
 }
 
-
+/**
+ * UI state for the article detail screen.
+ *
+ * @property article The selected [Article], or null if none selected.
+ * @property isFavorite Whether the article is marked as favorite.
+ * @property userRating User’s selected rating.
+ */
 data class DetailState(
     val article: Article?,
     val isFavorite: Boolean = false,
@@ -379,19 +402,7 @@ fun ArticleDetailsPreview() {
             onBackClick = {},
             onShareClick = {},
             onFavoriteClick = {},
-            state = DetailState(
-                article = Article(
-                    0,
-                    "Bottes noires pour l'automne",
-                    99.99, 119.99,
-                    4.3, 55,
-                    picture = Picture(
-                        url = "https://raw.githubusercontent.com/OpenClassrooms-Student-Center/D-velopper-une-interface-accessible-en-Jetpack-Compose/main/img/shoes/1.jpg",
-                        description = "Modèle femme qui pose dans la rue en bottes de pluie noires"
-                    ),
-                    Category.SHOES
-                )
-            ),
+            state = DetailState(article = FakeData.article),
             showBack = true,
             showNoItem = false,
             onRatingSelected = { _, stars -> }

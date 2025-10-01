@@ -13,6 +13,12 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
+/**
+ * Unit tests for [MainViewModel].
+ *
+ * These tests validate state management for the list and detail screens,
+ * including article selection, ratings, and favorites.
+ */
 class MainViewModelTest {
 
     private lateinit var repo: ArticleRepository
@@ -32,6 +38,10 @@ class MainViewModelTest {
         viewModel = MainViewModel(SavedStateHandle(), repo)
     }
 
+    /**
+     * Verifies that clicking an article updates the [DetailState]
+     * with the correct article information.
+     */
     @Test
     fun `clicking an article updates detailState`() = runTest {
 
@@ -65,6 +75,10 @@ class MainViewModelTest {
         }
     }
 
+    /**
+     * Ensures that [ListState] contains all articles
+     * after refreshing the repository.
+     */
     @Test
     fun `listState shows all articles`() = runTest {
         viewModel.listState.test {
@@ -78,6 +92,10 @@ class MainViewModelTest {
         }
     }
 
+    /**
+     * Ensures that calling [MainViewModel.setUserRating] updates
+     * the [DetailState] with the new user rating.
+     */
     @Test
     fun `setUserRating updates detailState`() = runTest {
 

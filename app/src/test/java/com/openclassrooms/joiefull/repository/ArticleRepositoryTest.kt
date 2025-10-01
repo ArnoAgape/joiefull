@@ -14,6 +14,12 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
+/**
+ * Unit tests for [ArticleRepository].
+ *
+ * These tests validate data mapping and retrieval logic
+ * between the API service (mocked) and the domain model [Article].
+ */
 class ArticleRepositoryTest {
 
     private val api: ArticleApiService = mockk()
@@ -24,6 +30,10 @@ class ArticleRepositoryTest {
         repo = ArticleRepository(api)
     }
 
+    /**
+     * Ensures that [ArticleRepository.fetchArticleData] returns
+     * correctly mapped [Article] objects from [ArticleDto].
+     */
     @Test
     fun `fetchArticleData returns a list of mapped articles`() = runTest {
 
@@ -38,7 +48,8 @@ class ArticleRepositoryTest {
             category = "BOTTOMS"
         )
         coEvery { api.getArticleData() } returns listOf(articleDto)
-        val expected = Article(0,
+        val expected = Article(
+            0,
             "Jean pour femme",
             49.99, 59.99,
             0.0, 55,
@@ -56,6 +67,10 @@ class ArticleRepositoryTest {
         assertEquals(listOf(expected), result)
     }
 
+    /**
+     * Ensures that [ArticleRepository.getArticleById] returns
+     * the expected article when a valid ID is provided.
+     */
     @Test
     fun `getArticleById returns a candidate`() = runTest {
 
@@ -70,7 +85,8 @@ class ArticleRepositoryTest {
             category = "BOTTOMS"
         )
         coEvery { api.getArticleData() } returns listOf(articleDto)
-        val expected = Article(0,
+        val expected = Article(
+            0,
             "Jean pour femme",
             49.99, 59.99,
             0.0, 55,

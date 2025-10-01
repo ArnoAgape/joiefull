@@ -8,7 +8,6 @@ import com.openclassrooms.joiefull.data.network.ArticleApiService
 import com.openclassrooms.joiefull.data.repository.ArticleRepository
 import com.openclassrooms.joiefull.di.NetworkModule
 import com.openclassrooms.joiefull.domain.Article
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +15,14 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel managing article list and detail states.
+ *
+ * Handles fetching, favorites, ratings, and navigation between list and detail.
+ *
+ * @property savedStateHandle Used to persist the selected article ID.
+ * @property repository Provides article data from API.
+ */
 class MainViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val repository: ArticleRepository,
@@ -39,7 +46,6 @@ class MainViewModel(
             ListState(articles = emptyList(), selectedArticleId = null)
         )
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val detailState: StateFlow<DetailState> =
         combine(selectedArticleId, _favorites, _ratings) { id, favorites, ratings ->
             if (id == null) {
@@ -116,5 +122,4 @@ class MainViewModel(
             }
         }
     }
-
 }
