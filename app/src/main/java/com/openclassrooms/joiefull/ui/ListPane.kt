@@ -191,7 +191,7 @@ fun ListPane(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(start = 16.dp, top = 16.dp, bottom = 16.dp),
             contentPadding = paddingValues,
             verticalArrangement = Arrangement.spacedBy(16.dp)
 

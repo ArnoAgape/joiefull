@@ -94,7 +94,7 @@ fun DetailPane(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(paddingValues),
+                .padding(paddingValues)
         ) {
             if (state.article == null) {
                 Column(
